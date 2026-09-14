@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>V-Number — Numéros virtuels</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1000px; margin: 0 auto; }
+  h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #38bdf8;
+  }
+  .sub {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 50px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all .2s;
+  }
+  .card:hover { transform: translateY(-4px); border-color: #38bdf8; }
+  .card h3 { color: #38bdf8; margin-bottom: 8px; font-size: 1.2rem; }
+  .card p { color: #94a3b8; font-size: .9rem; margin-bottom: 14px; }
+  .price { font-size: 1.8rem; font-weight: 700; margin-bottom: 14px; }
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #38bdf8;
+    color: #0f172a;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  button:hover { background: #0ea5e9; }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    color: #64748b;
+    font-size: .85rem;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>📱 V-Number</h1>
+    <p class="sub">Numéros virtuels instantanés pour recevoir vos SMS</p>
+    <div class="grid" id="grid"></div>
+    <footer>© 2025 V-Number — Paiement sécurisé Stripe</footer>
+  </div>
+
+<script>
+  const CATALOG = [
+    { id: 'fr-1', country: 'France', flag: '🇫🇷', description: 'SMS illimités 7 jours', price: 4.99 },
+    { id: 'us-1', country: 'États-Unis', flag: '🇺🇸', description: 'SMS illimités 7 jours', price: 3.99 },
+    { id: 'uk-1', country: 'Royaume-Uni', flag: '🇬🇧', description: 'SMS illimités 7 jours', price: 4.49 },
+    { id: 'de-1', country: 'Allemagne', flag: '🇩🇪', description: 'SMS illimités 7 jours', price: 4.99 },
+    { id: 'ca-1', country: 'Canada', flag: '🇨🇦', description: 'SMS illimités 7 jours', price: 4.49 },
+    { id: 'es-1', country: 'Espagne', flag: '🇪🇸', description: 'SMS illimités 7 jours', price: 3.99 },
+  ];
+
+  const grid = document.getElementById('grid');
+
+  CATALOG.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>${item.flag} ${item.country}</h3>
+      <p>${item.description}</p>
+      <div class="price">${item.price}€</div>
+      <button data-id="${item.id}">Acheter</button>
+    `;
+    grid.appendChild(card);
+  });
+
+  grid.addEventListener('click', async (e) => {
+    if (e.target.tagName !== 'BUTTON') return;
+    const id = e.target.dataset.id;
+    const item = CATALOG.find(i => i.id === id);
+    e.target.disabled = true;
+    e.target.textContent = 'Redirection...';
+
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item })
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert('Erreur : ' + (data.error || 'inconnue'));
+        e.target.disabled = false;
+        e.target.textContent = 'Acheter';
+      }
+    } catch (err) {
+      alert('Erreur réseau');
+      e.target.disabled = false;
+      e.target.textContent = 'Acheter';
+    }
+  });
+</script>
+</body>
+  </html>
