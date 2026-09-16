@@ -33,23 +33,23 @@
         <a href="#cours" class="cta">Voir les cours <i class="fas fa-arrow-right"></i></a>
     </section>
 
-    <!-- CLASSES / COURS -->
+    <!-- COURS -->
     <section id="cours" class="classes-section">
         <h2 class="section-title">Tous les Cours de l'Année</h2>
         <p class="section-sub">Filtrez par classe et par matière — programme officiel du Gabon.</p>
 
         <div class="filtres">
-            <button class="filtre-btn active" data-classe="">Toutes</button>
-            <button class="filtre-btn" data-classe="6ème">6ème</button>
-            <button class="filtre-btn" data-classe="5ème">5ème</button>
-            <button class="filtre-btn" data-classe="4ème">4ème</button>
-            <button class="filtre-btn" data-classe="3ème">3ème</button>
-            <button class="filtre-btn" data-classe="2nde">2nde</button>
-            <button class="filtre-btn" data-classe="1ère">1ère</button>
-            <button class="filtre-btn" data-classe="Terminale">Terminale</button>
+            <button class="filtre-btn classe-filtre active" data-classe="">Toutes</button>
+            <button class="filtre-btn classe-filtre" data-classe="6ème">6ème</button>
+            <button class="filtre-btn classe-filtre" data-classe="5ème">5ème</button>
+            <button class="filtre-btn classe-filtre" data-classe="4ème">4ème</button>
+            <button class="filtre-btn classe-filtre" data-classe="3ème">3ème</button>
+            <button class="filtre-btn classe-filtre" data-classe="2nde">2nde</button>
+            <button class="filtre-btn classe-filtre" data-classe="1ère">1ère</button>
+            <button class="filtre-btn classe-filtre" data-classe="Terminale">Terminale</button>
         </div>
 
-        <div class="filtres matiere-filtres">
+        <div class="filtres">
             <button class="matiere-btn active" data-matiere="">Toutes matières</button>
             <button class="matiere-btn" data-matiere="Mathématiques">Maths</button>
             <button class="matiere-btn" data-matiere="Physique-Chimie">Physique-Chimie</button>
@@ -66,22 +66,22 @@
     <!-- INFORMATIQUE SAKAMOTO Dev -->
     <section id="info" class="exam-section">
         <h2 class="section-title">Cours d'Informatique</h2>
-        <p class="section-sub">Par <strong style="color:#f39c12">SAKAMOTO Dev</strong> — Du débutant à l'expert.</p>
+        <p class="section-sub">Par <strong style="color:#f39c12">SAKAMOTO Dev</strong> — Du débutant à l'expert. 9 modules complets.</p>
 
         <div class="filtres" style="background:transparent">
-            <button class="filtre-btn info-filtre active" data-niveau="" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.3)">Tous niveaux</button>
-            <button class="filtre-btn info-filtre" data-niveau="Débutant" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.3)">🟢 Débutant</button>
-            <button class="filtre-btn info-filtre" data-niveau="Intermédiaire" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.3)">🟡 Intermédiaire</button>
-            <button class="filtre-btn info-filtre" data-niveau="Avancé" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.3)">🔴 Avancé</button>
+            <button class="filtre-btn info-filtre active" data-niveau="">Tous niveaux</button>
+            <button class="filtre-btn info-filtre" data-niveau="Débutant">🟢 Débutant</button>
+            <button class="filtre-btn info-filtre" data-niveau="Intermédiaire">🟡 Intermédiaire</button>
+            <button class="filtre-btn info-filtre" data-niveau="Avancé">🔴 Avancé</button>
         </div>
 
-        <div id="liste-info" class="exam-grid" style="margin-top:30px"></div>
+        <div id="liste-info" class="exam-grid"></div>
     </section>
 
     <!-- BAC -->
     <section id="bac" class="classes-section">
         <h2 class="section-title">Devoirs du Baccalauréat Gabonais</h2>
-        <p class="section-sub">Annales par série et par année (2023-2025).</p>
+        <p class="section-sub">9 annales par série — sessions 2017 à 2025.</p>
         <div id="liste-bac" class="classes-grid"></div>
     </section>
 
@@ -154,7 +154,7 @@
     <script src="data.js"></script>
     <script src="sakamoto.js"></script>
     <script>
-        // ===== STATS & INIT =====
+        // ===== UTILS =====
         const matiereClass = m => ({
             "Mathématiques":"math","Physique-Chimie":"pc","SVT":"svt","Français":"fr",
             "Philosophie":"philo","Économie":"eco","Histoire-Géo":"hg"
@@ -163,9 +163,9 @@
         // ===== COURS =====
         let filtreClasse = '', filtreMatiere = '';
 
-        document.querySelectorAll('.filtres:not(.matiere-filtres) .filtre-btn:not(.info-filtre):not(.exo-filtre)').forEach(btn => {
+        document.querySelectorAll('.classe-filtre').forEach(btn => {
             btn.onclick = () => {
-                document.querySelectorAll('.filtres:not(.matiere-filtres) .filtre-btn:not(.info-filtre):not(.exo-filtre)').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.classe-filtre').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 filtreClasse = btn.dataset.classe;
                 afficherCours();
@@ -208,14 +208,8 @@
         let filtreNiveau = '';
         document.querySelectorAll('.info-filtre').forEach(btn => {
             btn.onclick = () => {
-                document.querySelectorAll('.info-filtre').forEach(b => {
-                    b.classList.remove('active');
-                    b.style.background = 'rgba(255,255,255,0.1)';
-                    b.style.color = '#fff';
-                });
+                document.querySelectorAll('.info-filtre').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                btn.style.background = '#f39c12';
-                btn.style.color = '#1e1e2f';
                 filtreNiveau = btn.dataset.niveau;
                 afficherInfo();
             };
@@ -223,8 +217,13 @@
 
         function afficherInfo() {
             const container = document.getElementById('liste-info');
-            let liste = COURS_INFO;
+            let liste = (typeof COURS_INFO !== 'undefined') ? COURS_INFO : [];
             if (filtreNiveau) liste = liste.filter(c => c.niveau === filtreNiveau);
+
+            if (!liste.length) {
+                container.innerHTML = '<p style="text-align:center;grid-column:1/-1;padding:40px;color:#fff">Aucun cours d\'informatique chargé.</p>';
+                return;
+            }
 
             const couleur = { "Débutant":"#27ae60", "Intermédiaire":"#f39c12", "Avancé":"#e74c3c" };
 
@@ -248,25 +247,32 @@
         // ===== BAC =====
         function afficherBac() {
             const container = document.getElementById('liste-bac');
+            const couleurs = {
+                "A1":"#c2185b","A2":"#6a1b9a","B":"#00838f",
+                "C":"#1565c0","D":"#2e7d32","E":"#e65100"
+            };
+
             container.innerHTML = BACS.map(b => `
-                <div class="class-card" style="cursor:default;border-top-color:${b.color.includes('c2185b')?'#c2185b':b.color.includes('6a1b9a')?'#6a1b9a':b.color.includes('00838f')?'#00838f':b.color.includes('1565c0')?'#1565c0':b.color.includes('2e7d32')?'#2e7d32':'#e65100'}">
-                    <i class="fas fa-scroll"></i>
+                <div class="class-card" style="cursor:default;border-top-color:${couleurs[b.serie.replace('Série ','')]}">
+                    <i class="fas fa-scroll" style="color:${couleurs[b.serie.replace('Série ','')]}"></i>
                     <h3>${b.serie}</h3>
                     <h4 style="color:#f39c12;margin:5px 0 15px;font-size:1rem">${b.nom}</h4>
-                    <div style="text-align:left;width:100%;margin-bottom:15px">
-                        <strong style="color:#1e3c72;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px">Matières :</strong>
-                        <ul style="margin-top:8px">
-                            ${b.matieres.map(m => `<li style="color:#555;font-size:0.9rem;padding:4px 0;display:flex;align-items:center;gap:8px"><i class="fas fa-check" style="color:#f39c12;font-size:0.7rem"></i> ${m}</li>`).join('')}
+                    <div style="text-align:left;width:100%">
+                        <strong style="color:#1e3c72;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px">Matières</strong>
+                        <ul style="margin-top:6px;margin-bottom:12px">
+                            ${b.matieres.map(m => `<li style="color:#555;font-size:0.88rem;padding:3px 0;display:flex;align-items:center;gap:8px"><i class="fas fa-check" style="color:#f39c12;font-size:0.7rem"></i> ${m}</li>`).join('')}
                         </ul>
-                        <strong style="color:#1e3c72;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;display:block;margin-top:12px">Annales :</strong>
+                        <strong style="color:#1e3c72;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px">9 Annales</strong>
+                        <div style="margin-top:8px;max-height:280px;overflow-y:auto">
                         ${b.annales.map(a => `
-                            <details style="margin-top:8px;background:#f9fbff;padding:8px 12px;border-radius:8px;border:1px solid #e0e7f0">
-                                <summary style="cursor:pointer;font-weight:700;color:#1e3c72;font-size:0.9rem">📅 Session ${a.annee}</summary>
+                            <details style="margin-top:6px;background:#f9fbff;padding:8px 12px;border-radius:8px;border:1px solid #e0e7f0">
+                                <summary style="cursor:pointer;font-weight:700;color:#1e3c72;font-size:0.88rem">📅 Session ${a.annee}</summary>
                                 <ul style="margin-top:8px;padding-left:15px;list-style:disc">
-                                    ${a.sujets.map(s => `<li style="color:#555;font-size:0.85rem;padding:3px 0">${s}</li>`).join('')}
+                                    ${a.sujets.map(s => `<li style="color:#555;font-size:0.83rem;padding:3px 0">${s}</li>`).join('')}
                                 </ul>
                             </details>
                         `).join('')}
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -328,7 +334,7 @@
             let html;
             if (type === 'info') {
                 html = `
-                    <div class="modal-header" style="background:linear-gradient(135deg,#0f1729,#1a2540);color:#fff;padding:30px;border-radius:12px 12px 0 0">
+                    <div style="background:linear-gradient(135deg,#0f1729,#1a2540);color:#fff;padding:30px;border-radius:12px 12px 0 0">
                         <span style="background:#f39c12;color:#1e1e2f;padding:4px 14px;border-radius:15px;font-size:0.75rem;font-weight:700">${c.niveau} • ${c.duree} • Par ${c.auteur}</span>
                         <h2 style="color:#fff;margin:15px 0 8px">💻 ${c.titre}</h2>
                         <p style="color:rgba(255,255,255,0.8);margin:0">${c.description}</p>
@@ -343,7 +349,7 @@
                     </div>`;
             } else {
                 html = `
-                    <div class="modal-header" style="background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;padding:30px;border-radius:12px 12px 0 0">
+                    <div style="background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;padding:30px;border-radius:12px 12px 0 0">
                         <span style="background:#f39c12;color:#1e1e2f;padding:4px 14px;border-radius:15px;font-size:0.75rem;font-weight:700">${c.classe} — ${c.matiere}</span>
                         <h2 style="color:#fff;margin:15px 0 8px">${c.titre}</h2>
                         <p style="color:rgba(255,255,255,0.8);margin:0">${c.description}</p>
