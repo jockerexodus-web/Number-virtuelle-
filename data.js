@@ -860,4 +860,75 @@ const BACS = [
         { annee:"2018", sujets:["Construction : Plans","Physique : Électricité"] },
         { annee:"2017", sujets:["Électrotechnique : Moteur DC","Maths : Suites"] }
       ]}
+];// ================== COURS INFORMATIQUE SAKAMOTO Dev ==================
+const COURS_INFO = [
+    { id:"info-1", niveau:"Débutant", duree:"2h", auteur:"SAKAMOTO Dev",
+      titre:"Introduction à l'informatique",
+      description:"Découvrir l'ordinateur, ses composants et périphériques.",
+      contenu:`Un ordinateur est une machine qui traite des informations.
+COMPOSANTS : Processeur (CPU), RAM, disque dur, carte mère.
+PÉRIPHÉRIQUES : Entrée (clavier, souris), Sortie (écran, imprimante).
+UNITÉS : 1 Ko = 1024 o, 1 Mo = 1024 Ko, 1 Go = 1024 Mo.`,
+      exercices:["Citer 3 périphériques d'entrée","Convertir 2 Go en Mo"] },
+    { id:"info-2", niveau:"Débutant", duree:"3h", auteur:"SAKAMOTO Dev",
+      titre:"Système d'exploitation",
+      description:"Windows, Linux, macOS : rôles et utilisation.",
+      contenu:`RÔLE DE L'OS : gérer fichiers, mémoire, applications.
+PRINCIPAUX OS : Windows, Linux, macOS, Android.
+RACCOURCIS : Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z, Ctrl+S.`,
+      exercices:["Créer une arborescence","Maîtriser les raccourcis"] },
+    { id:"info-3", niveau:"Débutant", duree:"2h", auteur:"SAKAMOTO Dev",
+      titre:"Internet et navigation web",
+      description:"Comprendre le web et la sécurité.",
+      contenu:`Internet = réseau mondial ; Web = service sur Internet.
+NAVIGATEURS : Chrome, Firefox, Edge, Safari.
+SÉCURITÉ : mots de passe forts, HTTPS, attention au phishing.`,
+      exercices:["Créer un mot de passe fort","Reconnaître HTTPS"] },
+    { id:"info-4", niveau:"Débutant", duree:"4h", auteur:"SAKAMOTO Dev",
+      titre:"Bureautique : Word, Excel, PowerPoint",
+      description:"Maîtriser les logiciels de bureau.",
+      contenu:`WORD : mise en forme, styles, export PDF.
+EXCEL : formules =SOMME, MOYENNE, SI ; graphiques.
+POWERPOINT : diapositives, animations.`,
+      exercices:["Tableau Excel","Présentation 5 diapositives"] },
+    { id:"info-5", niveau:"Intermédiaire", duree:"6h", auteur:"SAKAMOTO Dev",
+      titre:"Algorithmique et logique",
+      description:"Penser comme un programmeur.",
+      contenu:`Un algorithme = suite finie d'instructions.
+STRUCTURE : déclaration → saisie → traitement → affichage.
+STRUCTURES DE CONTRÔLE : SI...SINON, POUR, TANT QUE.`,
+      exercices:["Algo moyenne de 3 notes","Algo plus grand de 2 nombres"] },
+    { id:"info-6", niveau:"Intermédiaire", duree:"8h", auteur:"SAKAMOTO Dev",
+      titre:"Programmation Python (partie 1)",
+      description:"Premiers pas avec Python.",
+      contenu:`print("Bonjour")
+VARIABLES : nom = "Sakamoto", age = 25
+CONDITIONS : if/else
+BOUCLES : for i in range(10)`,
+      exercices:["Afficher 'Bonjour' 10 fois","Somme de 1 à 100"] },
+    { id:"info-7", niveau:"Intermédiaire", duree:"8h", auteur:"SAKAMOTO Dev",
+      titre:"Programmation Python (partie 2)",
+      description:"Fonctions, listes, dictionnaires, fichiers.",
+      contenu:`FONCTIONS : def saluer(nom): return ...
+LISTES : fruits = ["mangue", "banane"]
+DICTIONNAIRES : {"nom": "Biyoghe"}
+FICHIERS : open("notes.txt", "w")`,
+      exercices:["Fonction moyenne","Gestion de notes"] },
+    { id:"info-8", niveau:"Intermédiaire", duree:"6h", auteur:"SAKAMOTO Dev",
+      titre:"HTML et CSS : créer un site web",
+      description:"Bases du développement web front-end.",
+      contenu:`HTML = structure, CSS = style.
+<body><h1>Titre</h1><p>Paragraphe.</p></body>
+body { font-family: Arial; }
+RESPONSIVE : @media (max-width: 768px)`,
+      exercices:["Page personnelle","Styliser un formulaire"] },
+    { id:"info-9", niveau:"Avancé", duree:"10h", auteur:"SAKAMOTO Dev",
+      titre:"JavaScript et bases de données",
+      description:"Rendre le web interactif et stocker des données.",
+      contenu:`JS : document.getElementById("titre").textContent = "Nouveau";
+SQL : CREATE TABLE, INSERT, SELECT.
+SGBD : MySQL, PostgreSQL, SQLite.`,
+      exercices:["Calculatrice simple","Créer une base d'élèves"] }
 ];
+
+window.COURS_INFO = COURS_INFO;
