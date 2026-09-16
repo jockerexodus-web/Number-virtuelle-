@@ -19,6 +19,7 @@
             <ul class="nav-links">
                 <li><a href="#accueil" class="active">Accueil</a></li>
                 <li><a href="#cours">Cours</a></li>
+                <li><a href="#info">Informatique</a></li>
                 <li><a href="#bac">Baccalauréat</a></li>
                 <li><a href="#exercices">Exercices</a></li>
             </ul>
@@ -27,31 +28,18 @@
 
     <!-- HERO -->
     <section id="accueil" class="hero">
-        <div class="hero-content">
-            <span class="hero-badge">🇬🇦 Programme officiel du Gabon</span>
-            <h1>Réussis ton année avec <span>TCHATCHIBARA-WEB School</span></h1>
-            <p>Tous les cours, exercices corrigés et devoirs du Baccalauréat — de la 6ème à la Terminale (séries A, B, C, D, E).</p>
-            <div class="hero-buttons">
-                <a href="#cours" class="btn-hero primary"><i class="fas fa-book-open"></i> Voir les cours</a>
-                <a href="#bac" class="btn-hero secondary"><i class="fas fa-scroll"></i> Devoirs du Bac</a>
-            </div>
-            <div class="hero-stats">
-                <div><strong id="stat-cours">0</strong><span>Cours</span></div>
-                <div><strong id="stat-exos">0</strong><span>Exercices</span></div>
-                <div><strong>6</strong><span>Séries Bac</span></div>
-            </div>
-        </div>
+        <h1>Bienvenue sur <span>TCHATCHIBARA-WEB School</span></h1>
+        <p>Plateforme éducative conforme au <strong>programme officiel du Gabon</strong>. Cours, exercices corrigés, devoirs du Bac et explications détaillées. Informatique by <strong>SAKAMOTO Dev</strong>.</p>
+        <a href="#cours" class="cta">Voir les cours <i class="fas fa-arrow-right"></i></a>
     </section>
 
-    <!-- COURS -->
-    <section id="cours" class="section">
-        <div class="section-head">
-            <h2>📚 Tous les Cours</h2>
-            <p>Filtre par classe et par matière pour trouver ton cours.</p>
-        </div>
+    <!-- CLASSES / COURS -->
+    <section id="cours" class="classes-section">
+        <h2 class="section-title">Tous les Cours de l'Année</h2>
+        <p class="section-sub">Filtrez par classe et par matière — programme officiel du Gabon.</p>
 
         <div class="filtres">
-            <button class="filtre-btn active" data-classe="">Toutes les classes</button>
+            <button class="filtre-btn active" data-classe="">Toutes</button>
             <button class="filtre-btn" data-classe="6ème">6ème</button>
             <button class="filtre-btn" data-classe="5ème">5ème</button>
             <button class="filtre-btn" data-classe="4ème">4ème</button>
@@ -61,7 +49,7 @@
             <button class="filtre-btn" data-classe="Terminale">Terminale</button>
         </div>
 
-        <div class="matiere-filtres">
+        <div class="filtres matiere-filtres">
             <button class="matiere-btn active" data-matiere="">Toutes matières</button>
             <button class="matiere-btn" data-matiere="Mathématiques">Maths</button>
             <button class="matiere-btn" data-matiere="Physique-Chimie">Physique-Chimie</button>
@@ -69,26 +57,39 @@
             <button class="matiere-btn" data-matiere="Français">Français</button>
             <button class="matiere-btn" data-matiere="Philosophie">Philosophie</button>
             <button class="matiere-btn" data-matiere="Économie">Économie</button>
+            <button class="matiere-btn" data-matiere="Histoire-Géo">Histoire-Géo</button>
         </div>
 
-        <div id="liste-cours" class="cards-grid"></div>
+        <div id="liste-cours" class="classes-grid"></div>
+    </section>
+
+    <!-- INFORMATIQUE SAKAMOTO Dev -->
+    <section id="info" class="exam-section">
+        <h2 class="section-title">Cours d'Informatique</h2>
+        <p class="section-sub">Par <strong style="color:#f39c12">SAKAMOTO Dev</strong> — Du débutant à l'expert.</p>
+
+        <div class="filtres" style="background:transparent">
+            <button class="filtre-btn info-filtre active" data-niveau="" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.3)">Tous niveaux</button>
+            <button class="filtre-btn info-filtre" data-niveau="Débutant" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.3)">🟢 Débutant</button>
+            <button class="filtre-btn info-filtre" data-niveau="Intermédiaire" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.3)">🟡 Intermédiaire</button>
+            <button class="filtre-btn info-filtre" data-niveau="Avancé" style="background:rgba(255,255,255,0.1);color:#fff;border-color:rgba(255,255,255,0.3)">🔴 Avancé</button>
+        </div>
+
+        <div id="liste-info" class="exam-grid" style="margin-top:30px"></div>
     </section>
 
     <!-- BAC -->
-    <section id="bac" class="section section-dark">
-        <div class="section-head">
-            <h2>🎓 Devoirs du Baccalauréat Gabonais</h2>
-            <p>Toutes les séries avec leurs matières et annales.</p>
-        </div>
-        <div id="liste-bac" class="cards-grid"></div>
+    <section id="bac" class="classes-section">
+        <h2 class="section-title">Devoirs du Baccalauréat Gabonais</h2>
+        <p class="section-sub">Annales par série et par année (2023-2025).</p>
+        <div id="liste-bac" class="classes-grid"></div>
     </section>
 
     <!-- EXERCICES -->
-    <section id="exercices" class="section">
-        <div class="section-head">
-            <h2>✏️ Exercices Corrigés</h2>
-            <p>Explications détaillées pas à pas.</p>
-        </div>
+    <section id="exercices" class="exercices-section">
+        <h2 class="section-title">Exercices Corrigés</h2>
+        <p class="section-sub">Solutions détaillées et explications pas à pas.</p>
+
         <div class="filtres">
             <button class="filtre-btn exo-filtre active" data-matiere="">Tous</button>
             <button class="filtre-btn exo-filtre" data-matiere="Mathématiques">Maths</button>
@@ -98,10 +99,11 @@
             <button class="filtre-btn exo-filtre" data-matiere="Philosophie">Philosophie</button>
             <button class="filtre-btn exo-filtre" data-matiere="Économie">Économie</button>
         </div>
-        <div id="liste-exercices" class="exo-list"></div>
+
+        <div id="liste-exercices"></div>
     </section>
 
-    <!-- MODAL COURS -->
+    <!-- MODAL -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="modal-close" onclick="fermerModal()">&times;</span>
@@ -111,49 +113,59 @@
 
     <!-- FOOTER -->
     <footer>
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <i class="fas fa-graduation-cap"></i>
-                <h3>TCHATCHIBARA-WEB <span>School</span></h3>
-                <p>Plateforme éducative gabonaise conforme au programme officiel. Cours, exercices et annales du Bac.</p>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>TCHATCHIBARA-WEB School</h4>
+                <p>Plateforme éducative gabonaise dédiée aux élèves du secondaire. Cours, exercices et annales du Bac conformes au programme national. Informatique by SAKAMOTO Dev.</p>
             </div>
-            <div class="footer-links">
+            <div class="footer-col">
                 <h4>Navigation</h4>
-                <a href="#accueil">Accueil</a>
-                <a href="#cours">Cours</a>
-                <a href="#bac">Baccalauréat</a>
-                <a href="#exercices">Exercices</a>
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#cours">Cours</a></li>
+                    <li><a href="#info">Informatique</a></li>
+                    <li><a href="#bac">Baccalauréat</a></li>
+                    <li><a href="#exercices">Exercices</a></li>
+                </ul>
             </div>
-            <div class="footer-contact">
+            <div class="footer-col">
                 <h4>Contact</h4>
-                <p><i class="fas fa-envelope"></i> contact@tchatchibara-web.ga</p>
-                <p><i class="fas fa-map-marker-alt"></i> Libreville, Gabon</p>
-                <div class="socials">
+                <ul>
+                    <li><i class="fas fa-envelope"></i> contact@tchatchibara-web.ga</li>
+                    <li><i class="fas fa-code"></i> Informatique : SAKAMOTO Dev</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Libreville, Gabon</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Suivez-nous</h4>
+                <div class="social">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-whatsapp"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 <strong>TCHATCHIBARA-WEB School</strong> — Programme officiel du Gabon 🇬🇦
+            &copy; 2026 <span>TCHATCHIBARA-WEB School</span> — Programme officiel du Gabon 🇬🇦 | Informatique by <span>SAKAMOTO Dev</span>
         </div>
     </footer>
 
     <script src="data.js"></script>
+    <script src="sakamoto.js"></script>
     <script>
-        // ============ STATS ============
-        document.getElementById('stat-cours').textContent = COURS.length;
-        document.getElementById('stat-exos').textContent = EXERCICES.length;
+        // ===== STATS & INIT =====
+        const matiereClass = m => ({
+            "Mathématiques":"math","Physique-Chimie":"pc","SVT":"svt","Français":"fr",
+            "Philosophie":"philo","Économie":"eco","Histoire-Géo":"hg"
+        }[m] || "default");
 
-        // ============ FILTRES ============
-        let filtreClasse = '';
-        let filtreMatiereCours = '';
+        // ===== COURS =====
+        let filtreClasse = '', filtreMatiere = '';
 
-        document.querySelectorAll('.filtre-btn:not(.exo-filtre)').forEach(btn => {
+        document.querySelectorAll('.filtres:not(.matiere-filtres) .filtre-btn:not(.info-filtre):not(.exo-filtre)').forEach(btn => {
             btn.onclick = () => {
-                document.querySelectorAll('.filtre-btn:not(.exo-filtre)').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.filtres:not(.matiere-filtres) .filtre-btn:not(.info-filtre):not(.exo-filtre)').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 filtreClasse = btn.dataset.classe;
                 afficherCours();
@@ -164,93 +176,104 @@
             btn.onclick = () => {
                 document.querySelectorAll('.matiere-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                filtreMatiereCours = btn.dataset.matiere;
+                filtreMatiere = btn.dataset.matiere;
                 afficherCours();
             };
         });
 
-        // ============ AFFICHER COURS ============
         function afficherCours() {
             const container = document.getElementById('liste-cours');
             let liste = COURS;
             if (filtreClasse) liste = liste.filter(c => c.classe.startsWith(filtreClasse));
-            if (filtreMatiereCours) liste = liste.filter(c => c.matiere === filtreMatiereCours);
+            if (filtreMatiere) liste = liste.filter(c => c.matiere === filtreMatiere);
 
             if (!liste.length) {
-                container.innerHTML = '<p class="vide">Aucun cours ne correspond à ces filtres.</p>';
+                container.innerHTML = '<p style="text-align:center;grid-column:1/-1;padding:40px;color:#888">Aucun cours pour ces filtres.</p>';
                 return;
             }
 
             container.innerHTML = liste.map(c => `
-                <div class="card" onclick="ouvrirCours('${c.id}')">
-                    <div class="card-badge ${getMatiereClass(c.matiere)}">${c.matiere}</div>
-                    <span class="card-classe">${c.classe}</span>
-                    <h3>${c.titre}</h3>
+                <div class="class-card" onclick="ouvrirCours('${c.id}','cours')" style="cursor:pointer">
+                    <i class="fas fa-book"></i>
+                    <span class="badge-matiere ${matiereClass(c.matiere)}">${c.matiere}</span>
+                    <h3>${c.classe}</h3>
+                    <h4 style="color:#2a5298;font-size:1rem;margin:5px 0">${c.titre}</h4>
                     <p>${c.description}</p>
-                    <button class="card-btn">📖 Ouvrir le cours <i class="fas fa-arrow-right"></i></button>
+                    <span class="btn-small">📖 Ouvrir le cours</span>
                 </div>
             `).join('');
         }
 
-        function getMatiereClass(m) {
-            const map = {
-                "Mathématiques": "math", "Physique-Chimie": "pc", "SVT": "svt",
-                "Français": "fr", "Philosophie": "philo", "Économie": "eco"
+        // ===== INFORMATIQUE SAKAMOTO =====
+        let filtreNiveau = '';
+        document.querySelectorAll('.info-filtre').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.info-filtre').forEach(b => {
+                    b.classList.remove('active');
+                    b.style.background = 'rgba(255,255,255,0.1)';
+                    b.style.color = '#fff';
+                });
+                btn.classList.add('active');
+                btn.style.background = '#f39c12';
+                btn.style.color = '#1e1e2f';
+                filtreNiveau = btn.dataset.niveau;
+                afficherInfo();
             };
-            return map[m] || "default";
+        });
+
+        function afficherInfo() {
+            const container = document.getElementById('liste-info');
+            let liste = COURS_INFO;
+            if (filtreNiveau) liste = liste.filter(c => c.niveau === filtreNiveau);
+
+            const couleur = { "Débutant":"#27ae60", "Intermédiaire":"#f39c12", "Avancé":"#e74c3c" };
+
+            container.innerHTML = liste.map(c => `
+                <div class="exam-card" onclick="ouvrirCours('${c.id}','info')" style="cursor:pointer">
+                    <h3>
+                        <i class="fas fa-laptop-code"></i>
+                        ${c.titre}
+                    </h3>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+                        <span style="background:${couleur[c.niveau]};color:#fff;padding:3px 12px;border-radius:15px;font-size:0.75rem;font-weight:700">${c.niveau}</span>
+                        <span style="background:rgba(255,255,255,0.15);color:#fff;padding:3px 12px;border-radius:15px;font-size:0.75rem">⏱️ ${c.duree}</span>
+                        <span style="background:rgba(243,156,18,0.2);color:#f39c12;padding:3px 12px;border-radius:15px;font-size:0.75rem;font-weight:700">Par ${c.auteur}</span>
+                    </div>
+                    <p style="color:rgba(255,255,255,0.8);font-size:0.95rem;margin-bottom:15px">${c.description}</p>
+                    <span class="btn-exam">💻 Ouvrir le cours</span>
+                </div>
+            `).join('');
         }
 
-        // ============ MODAL COURS ============
-        function ouvrirCours(id) {
-            const c = COURS.find(x => x.id === id);
-            if (!c) return;
-            document.getElementById('modal-body').innerHTML = `
-                <div class="modal-header ${getMatiereClass(c.matiere)}">
-                    <span class="modal-badge">${c.classe} — ${c.matiere}</span>
-                    <h2>${c.titre}</h2>
-                    <p>${c.description}</p>
-                </div>
-                <div class="modal-section">
-                    <h3>📘 Contenu du cours</h3>
-                    <div class="contenu">${c.contenu.replace(/\n/g, '<br>')}</div>
-                </div>
-                <div class="modal-section">
-                    <h3>✏️ Exercices d'application</h3>
-                    <ul class="exo-ul">${c.exercices.map(e => `<li>${e}</li>`).join('')}</ul>
-                </div>
-            `;
-            document.getElementById('modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function fermerModal() {
-            document.getElementById('modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        document.getElementById('modal').onclick = (e) => {
-            if (e.target.id === 'modal') fermerModal();
-        };
-
-        // ============ AFFICHER BAC ============
+        // ===== BAC =====
         function afficherBac() {
             const container = document.getElementById('liste-bac');
             container.innerHTML = BACS.map(b => `
-                <div class="card card-bac">
-                    <div class="bac-icon"><i class="fas fa-scroll"></i></div>
+                <div class="class-card" style="cursor:default;border-top-color:${b.color.includes('c2185b')?'#c2185b':b.color.includes('6a1b9a')?'#6a1b9a':b.color.includes('00838f')?'#00838f':b.color.includes('1565c0')?'#1565c0':b.color.includes('2e7d32')?'#2e7d32':'#e65100'}">
+                    <i class="fas fa-scroll"></i>
                     <h3>${b.serie}</h3>
-                    <p class="bac-nom">${b.nom}</p>
-                    <ul class="bac-matieres">
-                        ${b.matieres.map(m => `<li><i class="fas fa-check"></i> ${m}</li>`).join('')}
-                    </ul>
-                    <button class="card-btn dark">📥 Annales disponibles</button>
+                    <h4 style="color:#f39c12;margin:5px 0 15px;font-size:1rem">${b.nom}</h4>
+                    <div style="text-align:left;width:100%;margin-bottom:15px">
+                        <strong style="color:#1e3c72;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px">Matières :</strong>
+                        <ul style="margin-top:8px">
+                            ${b.matieres.map(m => `<li style="color:#555;font-size:0.9rem;padding:4px 0;display:flex;align-items:center;gap:8px"><i class="fas fa-check" style="color:#f39c12;font-size:0.7rem"></i> ${m}</li>`).join('')}
+                        </ul>
+                        <strong style="color:#1e3c72;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;display:block;margin-top:12px">Annales :</strong>
+                        ${b.annales.map(a => `
+                            <details style="margin-top:8px;background:#f9fbff;padding:8px 12px;border-radius:8px;border:1px solid #e0e7f0">
+                                <summary style="cursor:pointer;font-weight:700;color:#1e3c72;font-size:0.9rem">📅 Session ${a.annee}</summary>
+                                <ul style="margin-top:8px;padding-left:15px;list-style:disc">
+                                    ${a.sujets.map(s => `<li style="color:#555;font-size:0.85rem;padding:3px 0">${s}</li>`).join('')}
+                                </ul>
+                            </details>
+                        `).join('')}
+                    </div>
                 </div>
             `).join('');
         }
 
-        // ============ AFFICHER EXERCICES ============
+        // ===== EXERCICES =====
         let filtreExo = '';
-
         document.querySelectorAll('.exo-filtre').forEach(btn => {
             btn.onclick = () => {
                 document.querySelectorAll('.exo-filtre').forEach(b => b.classList.remove('active'));
@@ -266,22 +289,24 @@
             if (filtreExo) liste = liste.filter(e => e.matiere === filtreExo);
 
             if (!liste.length) {
-                container.innerHTML = '<p class="vide">Aucun exercice disponible.</p>';
+                container.innerHTML = '<p style="text-align:center;padding:40px;color:#888">Aucun exercice.</p>';
                 return;
             }
 
             container.innerHTML = liste.map((e, i) => `
-                <div class="exo-item">
-                    <div class="exo-head">
-                        <div class="exo-badge ${getMatiereClass(e.matiere)}">${e.matiere}</div>
-                        <span class="exo-classe">${e.classe}</span>
+                <div class="exercice-item">
+                    <h4>
+                        <i class="fas fa-pencil-alt"></i>
+                        ${e.titre}
+                        <span class="badge">${e.classe} • ${e.matiere}</span>
+                    </h4>
+                    <div class="enonce">
+                        <strong>Énoncé :</strong> ${e.enonce}
                     </div>
-                    <h3><i class="fas fa-pencil-alt"></i> ${e.titre}</h3>
-                    <div class="exo-enonce"><strong>Énoncé :</strong> ${e.enonce}</div>
-                    <button class="btn-toggle" onclick="toggleSolution(${i})">
+                    <button class="btn-toggle-exo" onclick="toggleSol(${i})">
                         <i class="fas fa-eye"></i> Voir la solution
                     </button>
-                    <div class="exo-solution" id="sol-${i}" style="display:none">
+                    <div class="solution" id="sol-${i}" style="display:none">
                         <strong>✅ Solution :</strong> ${e.solution}<br><br>
                         <strong>💡 Explication :</strong> ${e.explication}
                     </div>
@@ -289,25 +314,77 @@
             `).join('');
         }
 
-        function toggleSolution(i) {
+        function toggleSol(i) {
             const el = document.getElementById('sol-' + i);
             el.style.display = el.style.display === 'none' ? 'block' : 'none';
         }
 
-        // ============ SCROLL FLUIDE ============
+        // ===== MODAL =====
+        function ouvrirCours(id, type) {
+            const data = type === 'info' ? COURS_INFO : COURS;
+            const c = data.find(x => x.id === id);
+            if (!c) return;
+
+            let html;
+            if (type === 'info') {
+                html = `
+                    <div class="modal-header" style="background:linear-gradient(135deg,#0f1729,#1a2540);color:#fff;padding:30px;border-radius:12px 12px 0 0">
+                        <span style="background:#f39c12;color:#1e1e2f;padding:4px 14px;border-radius:15px;font-size:0.75rem;font-weight:700">${c.niveau} • ${c.duree} • Par ${c.auteur}</span>
+                        <h2 style="color:#fff;margin:15px 0 8px">💻 ${c.titre}</h2>
+                        <p style="color:rgba(255,255,255,0.8);margin:0">${c.description}</p>
+                    </div>
+                    <div style="padding:30px">
+                        <h3 style="color:#1e3c72;margin-bottom:15px">📘 Contenu du cours</h3>
+                        <div style="background:#f4f7fc;padding:20px;border-radius:10px;border-left:5px solid #f39c12;line-height:1.8;white-space:pre-wrap;font-family:inherit">${c.contenu}</div>
+                        <h3 style="color:#1e3c72;margin:25px 0 15px">✏️ Exercices pratiques</h3>
+                        <ul style="padding-left:20px;list-style:disc">
+                            ${c.exercices.map(e => `<li style="padding:6px 0;color:#334">${e}</li>`).join('')}
+                        </ul>
+                    </div>`;
+            } else {
+                html = `
+                    <div class="modal-header" style="background:linear-gradient(135deg,#1e3c72,#2a5298);color:#fff;padding:30px;border-radius:12px 12px 0 0">
+                        <span style="background:#f39c12;color:#1e1e2f;padding:4px 14px;border-radius:15px;font-size:0.75rem;font-weight:700">${c.classe} — ${c.matiere}</span>
+                        <h2 style="color:#fff;margin:15px 0 8px">${c.titre}</h2>
+                        <p style="color:rgba(255,255,255,0.8);margin:0">${c.description}</p>
+                    </div>
+                    <div style="padding:30px">
+                        <h3 style="color:#1e3c72;margin-bottom:15px">📘 Contenu du cours</h3>
+                        <div style="background:#f4f7fc;padding:20px;border-radius:10px;border-left:5px solid #f39c12;line-height:1.8;white-space:pre-wrap;font-family:inherit">${c.contenu}</div>
+                        <h3 style="color:#1e3c72;margin:25px 0 15px">✏️ Exercices d'application</h3>
+                        <ul style="padding-left:20px;list-style:disc">
+                            ${c.exercices.map(e => `<li style="padding:6px 0;color:#334">${e}</li>`).join('')}
+                        </ul>
+                    </div>`;
+            }
+            document.getElementById('modal-body').innerHTML = html;
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fermerModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        document.getElementById('modal').onclick = e => { if (e.target.id === 'modal') fermerModal(); };
+
+        // ===== SCROLL FLUIDE =====
         document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.onclick = (e) => {
+            a.onclick = e => {
                 const id = a.getAttribute('href');
                 if (id.length > 1) {
                     e.preventDefault();
                     const el = document.querySelector(id);
-                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+                    document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+                    a.classList.add('active');
                 }
             };
         });
 
-        // ============ INIT ============
+        // ===== INIT =====
         afficherCours();
+        afficherInfo();
         afficherBac();
         afficherExercices();
     </script>
