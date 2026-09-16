@@ -702,7 +702,6 @@ III. Synthèse (les deux).`,
 
 // ================== EXERCICES ==================
 const EXERCICES = [
-    // Maths
     { id:"ex-m1", classe:"3ème", matiere:"Mathématiques", titre:"Théorème de Thalès",
       enonce:"ABC, M∈[AB], N∈[AC], (MN)//(BC). AM=3, AB=7,5, MN=4. Calculer BC.",
       solution:"3/7,5 = 4/BC → BC = (4×7,5)/3 = 10 cm.",
@@ -735,8 +734,6 @@ const EXERCICES = [
       enonce:"u(0)=2, r=3. Calculer u(10).",
       solution:"u(10) = 2 + 10×3 = 32.",
       explication:"u(n) = u(0) + n×r." },
-
-    // Physique-Chimie
     { id:"ex-p1", classe:"3ème", matiere:"Physique-Chimie", titre:"Loi d'Ohm",
       enonce:"R=50 Ω, I=0,2 A. Calculer U.",
       solution:"U = R×I = 10 V.",
@@ -753,8 +750,6 @@ const EXERCICES = [
       enonce:"n₁=1, i₁=30°, n₂=1,5. Calculer i₂.",
       solution:"sin i₂ = sin30°/1,5 = 0,333 → i₂ ≈ 19,5°.",
       explication:"Loi de Snell-Descartes." },
-
-    // SVT
     { id:"ex-s1", classe:"Terminale", matiere:"SVT", titre:"Génétique",
       enonce:"Expliquer la transmission de l'information génétique.",
       solution:"Réplication → transcription → traduction.",
@@ -767,8 +762,6 @@ const EXERCICES = [
       enonce:"Trajet d'un aliment dans le tube digestif.",
       solution:"Bouche → œsophage → estomac → intestin grêle → gros intestin → anus.",
       explication:"Chaque étape transforme les aliments." },
-
-    // Français
     { id:"ex-f1", classe:"1ère", matiere:"Français", titre:"Commentaire composé",
       enonce:"Commentaire du poème 'Le Lac' de Lamartine.",
       solution:"I. Intro. II. Fuite du temps. III. Souffrance amoureuse. IV. Conclusion.",
@@ -777,62 +770,94 @@ const EXERCICES = [
       enonce:"'La littérature africaine est-elle engagée ?'",
       solution:"I. Oui. II. Non. III. Synthèse.",
       explication:"Plan dialectique classique." },
-
-    // Philo
     { id:"ex-ph1", classe:"Terminale", matiere:"Philosophie", titre:"La liberté",
       enonce:"La liberté est-elle une illusion ?",
       solution:"I. Déterminisme. II. Conscience. III. Conquête.",
       explication:"Dialectique : thèse/antithèse/synthèse." },
-
-    // Économie
     { id:"ex-ec1", classe:"Terminale", matiere:"Économie", titre:"Marché",
       enonce:"Comment se forme le prix d'équilibre ?",
       solution:"Confrontation offre/demande.",
       explication:"Prix tel que O = D." }
 ];
 
-// ================== ANNALES DU BAC ==================
+// ================== ANNALES DU BAC (9 par série) ==================
 const BACS = [
-    { id:"bac-a1", serie:"Série A1", nom:"Lettres", color:"linear-gradient(135deg,#c2185b,#880e4f)",
+    { id:"bac-a1", serie:"Série A1", nom:"Lettres",
       matieres:["Philosophie","Français","Histoire-Géographie","Anglais","Littérature africaine"],
       annales:[
         { annee:"2025", sujets:["Dissertation : La poésie doit-elle être engagée ?","Commentaire : extrait de 'Crépuscule des temps anciens'"] },
-        { annee:"2024", sujets:["Dissertation : Le roman est-il le miroir de la société ?","Résumé + discussion"] },
-        { annee:"2023", sujets:["Dissertation : La littérature africaine face à la colonisation","Commentaire de Senghor"] }
+        { annee:"2024", sujets:["Dissertation : Le roman est-il le miroir de la société ?","Résumé + discussion d'un texte de Mbolo"] },
+        { annee:"2023", sujets:["Dissertation : La littérature africaine face à la colonisation","Commentaire de Senghor"] },
+        { annee:"2022", sujets:["Dissertation : L'écrivain a-t-il un rôle social ?","Commentaire de 'L'Enfant noir'"] },
+        { annee:"2021", sujets:["Dissertation : Le théâtre africain est-il politique ?","Commentaire de Sony Labou Tansi"] },
+        { annee:"2020", sujets:["Dissertation : La femme dans la littérature africaine","Commentaire de Mariama Bâ"] },
+        { annee:"2019", sujets:["Dissertation : Poésie et engagement","Commentaire de Césaire"] },
+        { annee:"2018", sujets:["Dissertation : Le conte traditionnel a-t-il sa place ?","Commentaire d'un conte gabonais"] },
+        { annee:"2017", sujets:["Dissertation : Roman et histoire","Commentaire de 'Batouala'"] }
       ]},
-    { id:"bac-a2", serie:"Série A2", nom:"Langues", color:"linear-gradient(135deg,#6a1b9a,#4a148c)",
+    { id:"bac-a2", serie:"Série A2", nom:"Langues",
       matieres:["Philosophie","Français","Anglais renforcé","Espagnol/Allemand","Histoire-Géographie"],
       annales:[
-        { annee:"2025", sujets:["Philosophie : Le langage trahit-il la pensée ?","Anglais : Essay on African identity"] },
-        { annee:"2024", sujets:["Philosophie : La culture est-elle un héritage ?","Espagnol : Comprensión de texto"] },
-        { annee:"2023", sujets:["Philosophie : Peut-on tout dire ?","Anglais : Translation exercise"] }
+        { annee:"2025", sujets:["Philo : Le langage trahit-il la pensée ?","Anglais : Essay on African identity"] },
+        { annee:"2024", sujets:["Philo : La culture est-elle un héritage ?","Espagnol : Comprensión de texto"] },
+        { annee:"2023", sujets:["Philo : Peut-on tout dire ?","Anglais : Translation exercise"] },
+        { annee:"2022", sujets:["Philo : L'homme est-il un animal politique ?","Allemand : Textverständnis"] },
+        { annee:"2021", sujets:["Philo : Le travail libère-t-il ?","Anglais : Essay on education"] },
+        { annee:"2020", sujets:["Philo : La technique est-elle neutre ?","Espagnol : Redacción"] },
+        { annee:"2019", sujets:["Philo : L'art est-il utile ?","Anglais : Comprehension"] },
+        { annee:"2018", sujets:["Philo : La vérité est-elle relative ?","Allemand : Übersetzung"] },
+        { annee:"2017", sujets:["Philo : Faut-il craindre la science ?","Anglais : Essay on tradition"] }
       ]},
-    { id:"bac-b", serie:"Série B", nom:"Économique", color:"linear-gradient(135deg,#00838f,#004d56)",
+    { id:"bac-b", serie:"Série B", nom:"Économique",
       matieres:["Économie","Maths appliquées","Philosophie","Histoire-Géographie","Droit"],
       annales:[
         { annee:"2025", sujets:["Économie : Le Gabon face à la dépendance pétrolière","Maths : Statistiques descriptives"] },
         { annee:"2024", sujets:["Économie : Croissance et développement","Droit : Le contrat de travail"] },
-        { annee:"2023", sujets:["Économie : L'inflation et ses conséquences","Maths : Fonctions linéaires"] }
+        { annee:"2023", sujets:["Économie : L'inflation et ses conséquences","Maths : Fonctions linéaires"] },
+        { annee:"2022", sujets:["Économie : Le commerce international","Droit : La propriété"] },
+        { annee:"2021", sujets:["Économie : Chômage et politiques publiques","Maths : Suites"] },
+        { annee:"2020", sujets:["Économie : La mondialisation","Droit : Les obligations"] },
+        { annee:"2019", sujets:["Économie : Le marché et l'État","Maths : Intérêts composés"] },
+        { annee:"2018", sujets:["Économie : Le développement durable","Droit : Le mariage"] },
+        { annee:"2017", sujets:["Économie : Monnaie et banque","Maths : Probabilités"] }
       ]},
-    { id:"bac-c", serie:"Série C", nom:"Mathématiques", color:"linear-gradient(135deg,#1565c0,#0d47a1)",
+    { id:"bac-c", serie:"Série C", nom:"Mathématiques",
       matieres:["Mathématiques","Physique-Chimie","SVT","Philosophie","Anglais"],
       annales:[
         { annee:"2025", sujets:["Maths : Étude de f(x)=(2x+1)e^(-x)","PC : Mouvement dans un champ électrique"] },
         { annee:"2024", sujets:["Maths : Nombres complexes + intégrales","PC : Ondes mécaniques"] },
-        { annee:"2023", sujets:["Maths : Suites + probabilités","PC : Chimie organique"] }
+        { annee:"2023", sujets:["Maths : Suites + probabilités","PC : Chimie organique"] },
+        { annee:"2022", sujets:["Maths : Fonctions logarithme","PC : Électricité"] },
+        { annee:"2021", sujets:["Maths : Équations différentielles","PC : Radioactivité"] },
+        { annee:"2020", sujets:["Maths : Géométrie dans l'espace","PC : Thermodynamique"] },
+        { annee:"2019", sujets:["Maths : Arithmétique","PC : Optique"] },
+        { annee:"2018", sujets:["Maths : Fonctions trigonométriques","PC : Mécanique"] },
+        { annee:"2017", sujets:["Maths : Intégrales multiples","PC : Chimie des solutions"] }
       ]},
-    { id:"bac-d", serie:"Série D", nom:"Sciences", color:"linear-gradient(135deg,#2e7d32,#1b5e20)",
+    { id:"bac-d", serie:"Série D", nom:"Sciences",
       matieres:["SVT","Mathématiques","Physique-Chimie","Philosophie","Anglais"],
       annales:[
         { annee:"2025", sujets:["SVT : Génétique humaine et hérédité","Maths : Analyse"] },
         { annee:"2024", sujets:["SVT : Immunologie et vaccination","PC : Radioactivité"] },
-        { annee:"2023", sujets:["SVT : Reproduction et hormones","Maths : Probabilités"] }
+        { annee:"2023", sujets:["SVT : Reproduction et hormones","Maths : Probabilités"] },
+        { annee:"2022", sujets:["SVT : Neurophysiologie","PC : Ondes"] },
+        { annee:"2021", sujets:["SVT : Génétique mendélienne","Maths : Fonctions"] },
+        { annee:"2020", sujets:["SVT : Écosystèmes","PC : Électricité"] },
+        { annee:"2019", sujets:["SVT : Digestion et nutrition","Maths : Suites"] },
+        { annee:"2018", sujets:["SVT : Respiration cellulaire","PC : Mécanique"] },
+        { annee:"2017", sujets:["SVT : Reproduction humaine","Maths : Statistiques"] }
       ]},
-    { id:"bac-e", serie:"Série E", nom:"Technique", color:"linear-gradient(135deg,#e65100,#bf360c)",
+    { id:"bac-e", serie:"Série E", nom:"Technique",
       matieres:["Maths techniques","Physique appliquée","Construction","Électrotechnique","Philosophie"],
       annales:[
         { annee:"2025", sujets:["Maths : Équations différentielles","Électrotechnique : Moteur asynchrone"] },
         { annee:"2024", sujets:["Construction : Béton armé","Physique : Thermodynamique"] },
-        { annee:"2023", sujets:["Électrotechnique : Transformateur","Maths : Statistiques"] }
+        { annee:"2023", sujets:["Électrotechnique : Transformateur","Maths : Statistiques"] },
+        { annee:"2022", sujets:["Construction : Fondations","Physique : Mécanique des fluides"] },
+        { annee:"2021", sujets:["Électrotechnique : Circuits triphasés","Maths : Fonctions"] },
+        { annee:"2020", sujets:["Construction : Poutres","Physique : Résistance des matériaux"] },
+        { annee:"2019", sujets:["Électrotechnique : Alternateur","Maths : Intégrales"] },
+        { annee:"2018", sujets:["Construction : Plans","Physique : Électricité"] },
+        { annee:"2017", sujets:["Électrotechnique : Moteur DC","Maths : Suites"] }
       ]}
 ];
