@@ -90,3 +90,26 @@
                 return;
             }
             container.innerHTML = cours.map(c => `
+                <div class="class-card">
+                    <i class="fas fa-book"></i>
+                    <span class="badge">${c.classe}</span>
+                    <h3>${c.matiere}</h3>
+                    <h4 style="color:#1e3c72;font-size:1rem">${c.titre}</h4>
+                    <p>${c.description}</p>
+                    <a href="dashboard.html#${c.id}" class="btn-small">Voir le cours</a>
+                </div>
+            `).join('');
+        }
+
+        document.querySelectorAll('.filtre-btn').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.filtre-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                chargerCours(btn.dataset.classe);
+            };
+        });
+
+        chargerCours();
+    </script>
+</body>
+</html>
