@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TCHATCHIBARA-WEB School - Accueil</title>
+    <title>TCHATCHIBARA-WEB School - Programme du Gabon</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -17,146 +17,299 @@
                 TCHATCHIBARA-WEB<span>School</span>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html" class="active">Accueil</a></li>
-                <li><a href="#classes">Classes</a></li>
-                <li><a href="bac.html">Baccalauréat</a></li>
-                <li><a href="exercices.html">Exercices</a></li>
-                <li><a href="#" class="btn-connexion">Connexion</a></li>
+                <li><a href="#accueil" class="active">Accueil</a></li>
+                <li><a href="#cours">Cours</a></li>
+                <li><a href="#bac">Baccalauréat</a></li>
+                <li><a href="#exercices">Exercices</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- HERO -->
-    <section class="hero">
-        <h1>Bienvenue sur <span>TCHATCHIBARA-WEB School</span></h1>
-        <p>Plateforme éducative conforme au <strong>programme officiel du Gabon</strong>. Cours, exercices corrigés, devoirs du Baccalauréat et explications détaillées de la 6ème à la Terminale (séries A, B, C, D, A1, A2).</p>
-        <a href="#classes" class="cta">Explorer les classes <i class="fas fa-arrow-right"></i></a>
-    </section>
-
-    <!-- CLASSES -->
-    <section id="classes" class="classes-section">
-        <h2 class="section-title">Programme du Secondaire au Gabon</h2>
-        <p class="section-sub">Contenus conformes aux programmes du Ministère de l'Éducation Nationale du Gabon.</p>
-
-        <div class="classes-grid">
-            <div class="class-card">
-                <i class="fas fa-book-open"></i>
-                <h3>6ème & 5ème</h3>
-                <p><strong>Matières :</strong> Français, Mathématiques, Anglais, SVT, Physique-Chimie, Histoire-Géo, ECM, EPS.</p>
-                <p><strong>Objectif :</strong> Consolidation des bases du primaire et préparation au cycle moyen.</p>
-                <a href="#" class="btn-small">Voir les cours</a>
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🇬🇦 Programme officiel du Gabon</span>
+            <h1>Réussis ton année avec <span>TCHATCHIBARA-WEB School</span></h1>
+            <p>Tous les cours, exercices corrigés et devoirs du Baccalauréat — de la 6ème à la Terminale (séries A, B, C, D, E).</p>
+            <div class="hero-buttons">
+                <a href="#cours" class="btn-hero primary"><i class="fas fa-book-open"></i> Voir les cours</a>
+                <a href="#bac" class="btn-hero secondary"><i class="fas fa-scroll"></i> Devoirs du Bac</a>
             </div>
-
-            <div class="class-card">
-                <i class="fas fa-flask"></i>
-                <h3>4ème & 3ème (BEPC)</h3>
-                <p><strong>Matières :</strong> Maths, PC, SVT, Français, Anglais, Histoire-Géo, ECM, Espagnol/Allemand.</p>
-                <p><strong>Objectif :</strong> Préparation intensive au <strong>BEPC gabonais</strong>.</p>
-                <a href="#" class="btn-small">Voir les cours</a>
-            </div>
-
-            <div class="class-card">
-                <i class="fas fa-calculator"></i>
-                <h3>2nde (A, B, C, D, E)</h3>
-                <p><strong>Séries :</strong> A (Littéraire), B (Économique), C (Maths-Sciences), D (Sciences), E (Technique).</p>
-                <p><strong>Objectif :</strong> Orientation et consolidation des acquis du collège.</p>
-                <a href="#" class="btn-small">Voir les cours</a>
-            </div>
-
-            <div class="class-card">
-                <i class="fas fa-atom"></i>
-                <h3>1ère (A1, A2, B, C, D, E)</h3>
-                <p><strong>Séries :</strong> A1 (Lettres), A2 (Langues), B (Éco), C (Maths), D (Sciences), E (Technique).</p>
-                <p><strong>Objectif :</strong> Approfondissement et préparation aux épreuves de Terminale.</p>
-                <a href="#" class="btn-small">Voir les cours</a>
-            </div>
-
-            <div class="class-card">
-                <i class="fas fa-graduation-cap"></i>
-                <h3>Terminale (A1, A2, B, C, D)</h3>
-                <p><strong>Séries :</strong> A1, A2, B, C, D avec préparation au <strong>Baccalauréat gabonais</strong>.</p>
-                <p><strong>Objectif :</strong> Réussite au Bac et orientation universitaire.</p>
-                <a href="#" class="btn-small">Voir les cours</a>
-            </div>
-
-            <div class="class-card">
-                <i class="fas fa-laptop-code"></i>
-                <h3>Ressources Complémentaires</h3>
-                <p>Annales du Bac, devoirs surveillés, concours blancs, méthodologie et orientation.</p>
-                <a href="bac.html" class="btn-small">Voir les devoirs</a>
+            <div class="hero-stats">
+                <div><strong id="stat-cours">0</strong><span>Cours</span></div>
+                <div><strong id="stat-exos">0</strong><span>Exercices</span></div>
+                <div><strong>6</strong><span>Séries Bac</span></div>
             </div>
         </div>
     </section>
 
-    <!-- POINTS FORTS -->
-    <section class="exam-section">
-        <h2 class="section-title">Pourquoi choisir TCHATCHIBARA-WEB School ?</h2>
-        <p class="section-sub">Une plateforme 100% gabonaise, adaptée à nos réalités éducatives.</p>
-        <div class="exam-grid">
-            <div class="exam-card">
-                <h3><i class="fas fa-check-circle"></i> Programme officiel</h3>
-                <ul>
-                    <li><i class="fas fa-check"></i> Contenus conformes au MEN Gabon</li>
-                    <li><i class="fas fa-check"></i> Progression annuelle respectée</li>
-                    <li><i class="fas fa-check"></i> Sujets types BEPC & Bac</li>
-                </ul>
-            </div>
-            <div class="exam-card">
-                <h3><i class="fas fa-check-circle"></i> Exercices corrigés</h3>
-                <ul>
-                    <li><i class="fas fa-check"></i> Explications pas à pas</li>
-                    <li><i class="fas fa-check"></i> Méthodologie détaillée</li>
-                    <li><i class="fas fa-check"></i> Corrigés téléchargeables</li>
-                </ul>
-            </div>
-            <div class="exam-card">
-                <h3><i class="fas fa-check-circle"></i> Accessible partout</h3>
-                <ul>
-                    <li><i class="fas fa-check"></i> Mobile, tablette, ordinateur</li>
-                    <li><i class="fas fa-check"></i> 100% gratuit</li>
-                    <li><i class="fas fa-check"></i> Disponible 24h/24</li>
-                </ul>
-            </div>
+    <!-- COURS -->
+    <section id="cours" class="section">
+        <div class="section-head">
+            <h2>📚 Tous les Cours</h2>
+            <p>Filtre par classe et par matière pour trouver ton cours.</p>
         </div>
+
+        <div class="filtres">
+            <button class="filtre-btn active" data-classe="">Toutes les classes</button>
+            <button class="filtre-btn" data-classe="6ème">6ème</button>
+            <button class="filtre-btn" data-classe="5ème">5ème</button>
+            <button class="filtre-btn" data-classe="4ème">4ème</button>
+            <button class="filtre-btn" data-classe="3ème">3ème</button>
+            <button class="filtre-btn" data-classe="2nde">2nde</button>
+            <button class="filtre-btn" data-classe="1ère">1ère</button>
+            <button class="filtre-btn" data-classe="Terminale">Terminale</button>
+        </div>
+
+        <div class="matiere-filtres">
+            <button class="matiere-btn active" data-matiere="">Toutes matières</button>
+            <button class="matiere-btn" data-matiere="Mathématiques">Maths</button>
+            <button class="matiere-btn" data-matiere="Physique-Chimie">Physique-Chimie</button>
+            <button class="matiere-btn" data-matiere="SVT">SVT</button>
+            <button class="matiere-btn" data-matiere="Français">Français</button>
+            <button class="matiere-btn" data-matiere="Philosophie">Philosophie</button>
+            <button class="matiere-btn" data-matiere="Économie">Économie</button>
+        </div>
+
+        <div id="liste-cours" class="cards-grid"></div>
     </section>
+
+    <!-- BAC -->
+    <section id="bac" class="section section-dark">
+        <div class="section-head">
+            <h2>🎓 Devoirs du Baccalauréat Gabonais</h2>
+            <p>Toutes les séries avec leurs matières et annales.</p>
+        </div>
+        <div id="liste-bac" class="cards-grid"></div>
+    </section>
+
+    <!-- EXERCICES -->
+    <section id="exercices" class="section">
+        <div class="section-head">
+            <h2>✏️ Exercices Corrigés</h2>
+            <p>Explications détaillées pas à pas.</p>
+        </div>
+        <div class="filtres">
+            <button class="filtre-btn exo-filtre active" data-matiere="">Tous</button>
+            <button class="filtre-btn exo-filtre" data-matiere="Mathématiques">Maths</button>
+            <button class="filtre-btn exo-filtre" data-matiere="Physique-Chimie">Physique-Chimie</button>
+            <button class="filtre-btn exo-filtre" data-matiere="SVT">SVT</button>
+            <button class="filtre-btn exo-filtre" data-matiere="Français">Français</button>
+            <button class="filtre-btn exo-filtre" data-matiere="Philosophie">Philosophie</button>
+            <button class="filtre-btn exo-filtre" data-matiere="Économie">Économie</button>
+        </div>
+        <div id="liste-exercices" class="exo-list"></div>
+    </section>
+
+    <!-- MODAL COURS -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="fermerModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-col">
-                <h4>TCHATCHIBARA-WEB School</h4>
-                <p>Plateforme éducative gabonaise dédiée aux élèves du secondaire. Cours, exercices et annales du Bac conformes au programme national.</p>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>TCHATCHIBARA-WEB <span>School</span></h3>
+                <p>Plateforme éducative gabonaise conforme au programme officiel. Cours, exercices et annales du Bac.</p>
             </div>
-            <div class="footer-col">
+            <div class="footer-links">
                 <h4>Navigation</h4>
-                <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="#classes">Classes</a></li>
-                    <li><a href="bac.html">Baccalauréat</a></li>
-                    <li><a href="exercices.html">Exercices</a></li>
-                </ul>
+                <a href="#accueil">Accueil</a>
+                <a href="#cours">Cours</a>
+                <a href="#bac">Baccalauréat</a>
+                <a href="#exercices">Exercices</a>
             </div>
-            <div class="footer-col">
+            <div class="footer-contact">
                 <h4>Contact</h4>
-                <ul>
-                    <li><i class="fas fa-envelope"></i> contact@tchatchibara-web.ga</li>
-                    <li><i class="fas fa-phone"></i> +241 01 23 45 67</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Libreville, Gabon</li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Suivez-nous</h4>
-                <div class="social">
+                <p><i class="fas fa-envelope"></i> contact@tchatchibara-web.ga</p>
+                <p><i class="fas fa-map-marker-alt"></i> Libreville, Gabon</p>
+                <div class="socials">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-whatsapp"></i></a>
                     <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 <span>TCHATCHIBARA-WEB School</span> - Programme officiel du Gabon.
+            &copy; 2026 <strong>TCHATCHIBARA-WEB School</strong> — Programme officiel du Gabon 🇬🇦
         </div>
     </footer>
 
+    <script src="data.js"></script>
+    <script>
+        // ============ STATS ============
+        document.getElementById('stat-cours').textContent = COURS.length;
+        document.getElementById('stat-exos').textContent = EXERCICES.length;
+
+        // ============ FILTRES ============
+        let filtreClasse = '';
+        let filtreMatiereCours = '';
+
+        document.querySelectorAll('.filtre-btn:not(.exo-filtre)').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.filtre-btn:not(.exo-filtre)').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filtreClasse = btn.dataset.classe;
+                afficherCours();
+            };
+        });
+
+        document.querySelectorAll('.matiere-btn').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.matiere-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filtreMatiereCours = btn.dataset.matiere;
+                afficherCours();
+            };
+        });
+
+        // ============ AFFICHER COURS ============
+        function afficherCours() {
+            const container = document.getElementById('liste-cours');
+            let liste = COURS;
+            if (filtreClasse) liste = liste.filter(c => c.classe.startsWith(filtreClasse));
+            if (filtreMatiereCours) liste = liste.filter(c => c.matiere === filtreMatiereCours);
+
+            if (!liste.length) {
+                container.innerHTML = '<p class="vide">Aucun cours ne correspond à ces filtres.</p>';
+                return;
+            }
+
+            container.innerHTML = liste.map(c => `
+                <div class="card" onclick="ouvrirCours('${c.id}')">
+                    <div class="card-badge ${getMatiereClass(c.matiere)}">${c.matiere}</div>
+                    <span class="card-classe">${c.classe}</span>
+                    <h3>${c.titre}</h3>
+                    <p>${c.description}</p>
+                    <button class="card-btn">📖 Ouvrir le cours <i class="fas fa-arrow-right"></i></button>
+                </div>
+            `).join('');
+        }
+
+        function getMatiereClass(m) {
+            const map = {
+                "Mathématiques": "math", "Physique-Chimie": "pc", "SVT": "svt",
+                "Français": "fr", "Philosophie": "philo", "Économie": "eco"
+            };
+            return map[m] || "default";
+        }
+
+        // ============ MODAL COURS ============
+        function ouvrirCours(id) {
+            const c = COURS.find(x => x.id === id);
+            if (!c) return;
+            document.getElementById('modal-body').innerHTML = `
+                <div class="modal-header ${getMatiereClass(c.matiere)}">
+                    <span class="modal-badge">${c.classe} — ${c.matiere}</span>
+                    <h2>${c.titre}</h2>
+                    <p>${c.description}</p>
+                </div>
+                <div class="modal-section">
+                    <h3>📘 Contenu du cours</h3>
+                    <div class="contenu">${c.contenu.replace(/\n/g, '<br>')}</div>
+                </div>
+                <div class="modal-section">
+                    <h3>✏️ Exercices d'application</h3>
+                    <ul class="exo-ul">${c.exercices.map(e => `<li>${e}</li>`).join('')}</ul>
+                </div>
+            `;
+            document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fermerModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('modal').onclick = (e) => {
+            if (e.target.id === 'modal') fermerModal();
+        };
+
+        // ============ AFFICHER BAC ============
+        function afficherBac() {
+            const container = document.getElementById('liste-bac');
+            container.innerHTML = BACS.map(b => `
+                <div class="card card-bac">
+                    <div class="bac-icon"><i class="fas fa-scroll"></i></div>
+                    <h3>${b.serie}</h3>
+                    <p class="bac-nom">${b.nom}</p>
+                    <ul class="bac-matieres">
+                        ${b.matieres.map(m => `<li><i class="fas fa-check"></i> ${m}</li>`).join('')}
+                    </ul>
+                    <button class="card-btn dark">📥 Annales disponibles</button>
+                </div>
+            `).join('');
+        }
+
+        // ============ AFFICHER EXERCICES ============
+        let filtreExo = '';
+
+        document.querySelectorAll('.exo-filtre').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.exo-filtre').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filtreExo = btn.dataset.matiere;
+                afficherExercices();
+            };
+        });
+
+        function afficherExercices() {
+            const container = document.getElementById('liste-exercices');
+            let liste = EXERCICES;
+            if (filtreExo) liste = liste.filter(e => e.matiere === filtreExo);
+
+            if (!liste.length) {
+                container.innerHTML = '<p class="vide">Aucun exercice disponible.</p>';
+                return;
+            }
+
+            container.innerHTML = liste.map((e, i) => `
+                <div class="exo-item">
+                    <div class="exo-head">
+                        <div class="exo-badge ${getMatiereClass(e.matiere)}">${e.matiere}</div>
+                        <span class="exo-classe">${e.classe}</span>
+                    </div>
+                    <h3><i class="fas fa-pencil-alt"></i> ${e.titre}</h3>
+                    <div class="exo-enonce"><strong>Énoncé :</strong> ${e.enonce}</div>
+                    <button class="btn-toggle" onclick="toggleSolution(${i})">
+                        <i class="fas fa-eye"></i> Voir la solution
+                    </button>
+                    <div class="exo-solution" id="sol-${i}" style="display:none">
+                        <strong>✅ Solution :</strong> ${e.solution}<br><br>
+                        <strong>💡 Explication :</strong> ${e.explication}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleSolution(i) {
+            const el = document.getElementById('sol-' + i);
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // ============ SCROLL FLUIDE ============
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.onclick = (e) => {
+                const id = a.getAttribute('href');
+                if (id.length > 1) {
+                    e.preventDefault();
+                    const el = document.querySelector(id);
+                    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
+        });
+
+        // ============ INIT ============
+        afficherCours();
+        afficherBac();
+        afficherExercices();
+    </script>
 </body>
 </html>
