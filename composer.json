@@ -1,0 +1,16 @@
+{
+    "name": "tonnom/ivasms-clone",
+    "description": "Clone d'iVASMS avec réception de vrais SMS via Twilio",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "twilio/sdk": "^7.0",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "files": []
+    },
+    "config": {
+        "optimize-autoloader": true
+    }
+}
