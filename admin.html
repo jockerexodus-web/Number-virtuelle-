@@ -88,7 +88,7 @@ nav{justify-content:center}
 <div id="step-code" style="display:none">
 <div class="step-info"><span class="step-badge">2</span> Étape 2 sur 2 — Code secret</div>
 <form id="code-form">
-<input type="password" id="code" placeholder="Code à 4 chiffres" maxlength="4" pattern="\d{4}" inputmode="numeric" required>
+<input type="password" id="code" placeholder="Code à 4 chiffres" maxlength="4" inputmode="numeric" required>
 <button type="submit" class="btn btn-primary">Se connecter</button>
 <div id="code-error" class="error"></div>
 <button type="button" id="back-to-pwd" class="btn-link">← Retour</button>
@@ -139,40 +139,25 @@ nav{justify-content:center}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, push, set, remove, onValue, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-/* ⚠️ MÊME CONFIG QUE index.html */
 const firebaseConfig = {
-  apiKey: "REMPLACE_MOI",
-  authDomain: "REMPLACE_MOI",
-  databaseURL: "REMPLACE_MOI",
-  projectId: "REMPLACE_MOI",
-  storageBucket: "REMPLACE_MOI",
-  messagingSenderId: "REMPLACE_MOI",
-  appId: "REMPLACE_MOI"
+  apiKey: "AIzaSyC7DyasG34K8ylgxbHVzxgAxIGACUFVbLA",
+  authDomain: "toby-9065b.firebaseapp.com",
+  databaseURL: "https://toby-9065b-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "toby-9065b",
+  storageBucket: "toby-9065b.firebasestorage.app",
+  messagingSenderId: "163849144101",
+  appId: "1:163849144101:web:3db472e7f6f237afafbccc"
 };
 
-const configOk = !firebaseConfig.apiKey.includes('REMPLACE');
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-// 🔐 IDENTIFIANTS ADMIN
 const ADMIN_PASSWORD = 's@liou11';
 const ADMIN_CODE = '2007';
 
 let authed = false;
-let db = null;
 
-if (configOk) {
-  const app = initializeApp(firebaseConfig);
-  db = getDatabase(app);
-} else {
-  document.getElementById('login-section').innerHTML = `
-    <h1>⚠️ Config Firebase manquante</h1>
-    <div class="card" style="max-width:600px">
-      <p style="margin-bottom:12px">Ouvre <code>admin.html</code> et remplace le bloc <code>firebaseConfig</code> (ligne ~180) par ta vraie config Firebase.</p>
-      <p style="font-size:13px;color:var(--muted)">Même config que dans <code>index.html</code> et <code>sms.html</code>.</p>
-    </div>`;
-}
-
-// Étape 1
-document.getElementById('login-form')?.addEventListener('submit', e => {
+document.getElementById('login-form').addEventListener('submit', e => {
   e.preventDefault();
   const pwd = document.getElementById('pwd').value;
   const err = document.getElementById('login-error');
@@ -187,8 +172,7 @@ document.getElementById('login-form')?.addEventListener('submit', e => {
   }
 });
 
-// Étape 2
-document.getElementById('code-form')?.addEventListener('submit', e => {
+document.getElementById('code-form').addEventListener('submit', e => {
   e.preventDefault();
   const code = document.getElementById('code').value;
   const err = document.getElementById('code-error');
@@ -196,7 +180,7 @@ document.getElementById('code-form')?.addEventListener('submit', e => {
     authed = true;
     document.getElementById('login-section').style.display = 'none';
     document.getElementById('admin-section').style.display = 'block';
-    if (db) initAdmin();
+    initAdmin();
     showToast('✅ Connecté');
   } else {
     err.textContent = '❌ Code incorrect';
@@ -204,7 +188,7 @@ document.getElementById('code-form')?.addEventListener('submit', e => {
   }
 });
 
-document.getElementById('back-to-pwd')?.addEventListener('click', () => {
+document.getElementById('back-to-pwd').addEventListener('click', () => {
   document.getElementById('step-code').style.display = 'none';
   document.getElementById('step-password').style.display = 'block';
   document.getElementById('pwd').focus();
@@ -228,7 +212,7 @@ function initAdmin() {
   });
 
   document.getElementById('btn-reset').addEventListener('click', async () => {
-    if (!confirm('⚠️ Supprimer TOUS les numéros et messages ? Action irréversible.')) return;
+    if (!confirm('⚠️ Supprimer TOUS les numéros et messages ?')) return;
     if (!confirm('Vraiment sûr ?')) return;
     await remove(ref(db, 'numeros'));
     await remove(ref(db, 'messages'));
@@ -294,7 +278,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// Thème
 const themeToggle = document.getElementById('theme-toggle');
 const savedTheme = localStorage.getItem('toby_theme') || 'light';
 document.body.classList.toggle('dark', savedTheme === 'dark');
