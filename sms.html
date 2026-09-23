@@ -35,13 +35,6 @@ nav a:hover{background:var(--bg);color:var(--text)}
 .btn-primary:hover{background:var(--primary-dark)}
 .btn-danger{background:rgba(231,76,60,.12);color:var(--danger)}
 .btn-danger:hover{background:rgba(231,76,60,.2)}
-.toolbar{background:var(--card);border-radius:12px;padding:14px 18px;border:1px solid var(--border);display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
-.search-box{flex:1;min-width:200px;position:relative}
-.search-box input{width:100%;padding:10px 14px 10px 38px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:14px;font-family:inherit}
-.search-box::before{content:'🔍';position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.6}
-.search-box input:focus{outline:none;border-color:var(--primary);background:var(--card)}
-.filter-select{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:14px;font-family:inherit;cursor:pointer}
-.filter-select:focus{outline:none;border-color:var(--primary)}
 .messages{display:flex;flex-direction:column;gap:12px;margin-bottom:50px}
 .message{background:var(--card);border-radius:12px;padding:16px 20px;border:1px solid var(--border);animation:slideIn .3s ease-out}
 @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
@@ -54,15 +47,17 @@ nav a:hover{background:var(--bg);color:var(--text)}
 body.dark .code-label{color:#4ade80}
 .code-value{font-family:'Courier New',monospace;font-size:20px;font-weight:700;color:#15803d;letter-spacing:2px;background:var(--card);padding:4px 12px;border-radius:6px;border:1px solid rgba(46,204,113,.3)}
 body.dark .code-value{color:#4ade80}
-.btn-copy{margin-left:auto;background:#16a34a;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s;font-family:inherit}
+.btn-copy{margin-left:auto;background:#16a34a;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
 .btn-copy:hover{background:#15803d}
 .btn-copy.copied{background:#0ea5e9}
 .empty{text-align:center;padding:60px 40px;color:var(--muted);background:var(--card);border-radius:12px;border:1px dashed var(--border)}
 .empty-icon{font-size:48px;margin-bottom:14px;opacity:.7}
 .empty p{font-size:16px;margin-bottom:6px;color:var(--text)}
 .empty small{font-size:13px}
-.empty button{margin-top:16px;padding:10px 20px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;font-family:inherit}
-footer{text-align:center;padding:30px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--border);background:var(--card);margin-top:auto}
+.loader{text-align:center;padding:60px 40px;background:var(--card);border-radius:12px;border:1px dashed var(--border)}
+.loader-spin{width:44px;height:44px;border:4px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+footer{text-align:center;padding:30px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--border);background:var(--card);margin-top:50px}
 footer strong{color:var(--primary)}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a252f;color:#fff;padding:12px 22px;border-radius:10px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;z-index:999;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -93,8 +88,8 @@ nav{justify-content:center}
 
 <div class="sms-header">
 <div>
-<h1 id="numero-titre">...</h1>
-<p id="numero-sub">Chargement...</p>
+<h1 id="numero-titre">Chargement...</h1>
+<p id="numero-sub">...</p>
 </div>
 <div class="actions">
 <button id="btn-export" class="btn btn-primary">📥 Exporter</button>
@@ -102,18 +97,8 @@ nav{justify-content:center}
 </div>
 </div>
 
-<div class="toolbar">
-<div class="search-box"><input type="text" id="search-msg" placeholder="Rechercher dans les SMS..."></div>
-<select id="filter-exp" class="filter-select"><option value="">👤 Tous les expéditeurs</option></select>
-<select id="filter-tri" class="filter-select">
-<option value="recent">🕐 Plus récents</option>
-<option value="ancien">🕐 Plus anciens</option>
-<option value="exp">👤 Expéditeur (A→Z)</option>
-</select>
-</div>
-
 <div id="messages-container" class="messages">
-<div class="empty"><div class="empty-icon">⏳</div><p>Chargement...</p></div>
+<div class="loader"><div class="loader-spin"></div><p>Chargement des messages...</p></div>
 </div>
 </main>
 
@@ -129,178 +114,135 @@ nav{justify-content:center}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-/* ⚠️ MÊME CONFIG QUE index.html */
 const firebaseConfig = {
-  apiKey: "REMPLACE_MOI",
-  authDomain: "REMPLACE_MOI",
-  databaseURL: "REMPLACE_MOI",
-  projectId: "REMPLACE_MOI",
-  storageBucket: "REMPLACE_MOI",
-  messagingSenderId: "REMPLACE_MOI",
-  appId: "REMPLACE_MOI"
+  apiKey: "AIzaSyC7DyasG34K8ylgxbHVzxgAxIGACUFVbLA",
+  authDomain: "toby-9065b.firebaseapp.com",
+  databaseURL: "https://toby-9065b-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "toby-9065b",
+  storageBucket: "toby-9065b.firebasestorage.app",
+  messagingSenderId: "163849144101",
+  appId: "1:163849144101:web:3db472e7f6f237afafbccc"
 };
 
-const configOk = !firebaseConfig.apiKey.includes('REMPLACE');
-if (!configOk) {
-  document.getElementById('messages-container').innerHTML =
-    `<div class="empty"><div class="empty-icon">⚠️</div><p>Config Firebase manquante</p><small>Ouvre le fichier sms.html et colle ta config Firebase</small></div>`;
-}
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 const params = new URLSearchParams(location.search);
 const numeroId = params.get('id');
 if (!numeroId) location.href = 'index.html';
 
+const titleEl = document.getElementById('numero-titre');
+const subEl = document.getElementById('numero-sub');
+const container = document.getElementById('messages-container');
+
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let allMessages = [];
 let lastCount = 0;
 let firstLoad = true;
 
-if (configOk && numeroId) {
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  initApp(db);
-}
+onValue(ref(db, `numeros/${numeroId}`), (snap) => {
+  const n = snap.val();
+  if (!n) { location.href = 'index.html'; return; }
+  titleEl.textContent = n.numero;
+  subEl.innerHTML = `${esc(n.pays)} · ${esc(n.operateur||'Twilio')} <span class="live-dot"></span><span class="live-text">En direct</span>`;
+});
 
-function initApp(db) {
-  const container = document.getElementById('messages-container');
-  const titleEl = document.getElementById('numero-titre');
-  const subEl = document.getElementById('numero-sub');
-  const searchMsg = document.getElementById('search-msg');
-  const filterExp = document.getElementById('filter-exp');
-  const filterTri = document.getElementById('filter-tri');
+onValue(ref(db, `messages/${numeroId}`), (snapshot) => {
+  const data = snapshot.val() || {};
+  allMessages = Object.entries(data).map(([id, m]) => ({ id, ...m }));
+  allMessages.sort((a,b)=>(b.recu_at||0)-(a.recu_at||0));
 
-  const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  if (!firstLoad && allMessages.length > lastCount) notifyNewMessage();
+  lastCount = allMessages.length;
+  firstLoad = false;
 
-  onValue(ref(db, `numeros/${numeroId}`), (snap) => {
-    const n = snap.val();
-    if (!n) { location.href = 'index.html'; return; }
-    titleEl.textContent = n.numero;
-    subEl.innerHTML = `${esc(n.pays)} · ${esc(n.operateur||'Twilio')} <span class="live-dot"></span><span class="live-text">En direct</span>`;
-  });
+  renderMessages();
+});
 
-  onValue(ref(db, `messages/${numeroId}`), (snapshot) => {
-    const data = snapshot.val() || {};
-    allMessages = Object.entries(data).map(([id, m]) => ({ id, ...m }));
-
-    // Peuple le filtre expéditeur
-    const exps = [...new Set(allMessages.map(m => m.expediteur).filter(Boolean))].sort();
-    const currentFilter = filterExp.value;
-    filterExp.innerHTML = '<option value="">👤 Tous les expéditeurs</option>' +
-      exps.map(e => `<option value="${esc(e)}">${esc(e)}</option>`).join('');
-    filterExp.value = currentFilter;
-
-    if (!firstLoad && allMessages.length > lastCount) notifyNewMessage();
-    lastCount = allMessages.length;
-    firstLoad = false;
-
-    renderMessages();
-  });
-
-  function renderMessages() {
-    let result = [...allMessages];
-
-    const q = searchMsg.value.toLowerCase().trim();
-    if (q) result = result.filter(m =>
-      (m.contenu||'').toLowerCase().includes(q) ||
-      (m.expediteur||'').toLowerCase().includes(q));
-
-    if (filterExp.value) result = result.filter(m => m.expediteur === filterExp.value);
-
-    const tri = filterTri.value;
-    if (tri === 'recent') result.sort((a,b)=>(b.recu_at||0)-(a.recu_at||0));
-    else if (tri === 'ancien') result.sort((a,b)=>(a.recu_at||0)-(b.recu_at||0));
-    else if (tri === 'exp') result.sort((a,b)=>(a.expediteur||'').localeCompare(b.expediteur||''));
-
-    if (!result.length) {
-      container.innerHTML = `<div class="empty"><div class="empty-icon">📭</div>
-        <p>${allMessages.length ? 'Aucun message trouvé' : 'Aucun message pour le moment'}</p>
-        <small>${allMessages.length ? 'Essaie avec d\'autres mots-clés' : 'Les SMS reçus apparaîtront ici en temps réel'}</small></div>`;
-      return;
-    }
-
-    container.innerHTML = result.map(m => {
-      const code = (m.contenu||'').match(/\b\d{4,8}\b/);
-      const codeBox = code ? `<div class="code-box">
-        <span class="code-label">Code détecté :</span>
-        <span class="code-value">${code[0]}</span>
-        <button class="btn-copy" data-code="${code[0]}">Copier</button>
-      </div>` : '';
-      return `<div class="message">
-        <div class="msg-header">
-          <strong>${esc(m.expediteur||'Inconnu')}</strong>
-          <span class="time">${timeAgo(m.recu_at)}</span>
-        </div>
-        <div class="msg-body">${esc(m.contenu||'').replace(/\n/g,'<br>')}</div>
-        ${codeBox}
-      </div>`;
-    }).join('');
-
-    attachCopyHandlers();
+function renderMessages() {
+  if (!allMessages.length) {
+    container.innerHTML = `<div class="empty"><div class="empty-icon">📭</div>
+      <p>Aucun message pour le moment</p>
+      <small>Les SMS reçus apparaîtront ici en temps réel</small>
+      <small style="margin-top:12px;display:block;color:var(--primary)">💡 Va sur admin.html pour simuler un SMS</small></div>`;
+    return;
   }
 
-  function attachCopyHandlers() {
-    document.querySelectorAll('.btn-copy').forEach(b => {
-      b.addEventListener('click', async () => {
-        try {
-          await navigator.clipboard.writeText(b.dataset.code);
-          const old = b.textContent;
-          b.textContent = '✓ Copié !';
-          b.classList.add('copied');
-          setTimeout(() => { b.textContent = old; b.classList.remove('copied'); }, 1500);
-        } catch(e) {}
-      });
+  container.innerHTML = allMessages.map(m => {
+    const code = (m.contenu||'').match(/\b\d{4,8}\b/);
+    const codeBox = code ? `<div class="code-box">
+      <span class="code-label">Code détecté :</span>
+      <span class="code-value">${code[0]}</span>
+      <button class="btn-copy" data-code="${code[0]}">Copier</button>
+    </div>` : '';
+    return `<div class="message">
+      <div class="msg-header">
+        <strong>${esc(m.expediteur||'Inconnu')}</strong>
+        <span class="time">${timeAgo(m.recu_at)}</span>
+      </div>
+      <div class="msg-body">${esc(m.contenu||'').replace(/\n/g,'<br>')}</div>
+      ${codeBox}
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('.btn-copy').forEach(b => {
+    b.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(b.dataset.code);
+        const old = b.textContent;
+        b.textContent = '✓ Copié !';
+        b.classList.add('copied');
+        setTimeout(() => { b.textContent = old; b.classList.remove('copied'); }, 1500);
+      } catch(e) {}
     });
-  }
-
-  function timeAgo(ts) {
-    if (!ts) return '—';
-    const d = Math.floor((Date.now()-ts)/1000);
-    if (d < 60) return "à l'instant";
-    if (d < 3600) return Math.floor(d/60)+" min";
-    if (d < 86400) return Math.floor(d/3600)+" h";
-    return Math.floor(d/86400)+" j";
-  }
-
-  function notifyNewMessage() {
-    try {
-      const ctx = new (window.AudioContext||window.webkitAudioContext)();
-      const osc = ctx.createOscillator(), gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.frequency.value = 800;
-      gain.gain.setValueAtTime(0.1, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-      osc.start(); osc.stop(ctx.currentTime + 0.3);
-    } catch(e) {}
-  }
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
-
-  searchMsg.addEventListener('input', renderMessages);
-  filterExp.addEventListener('change', renderMessages);
-  filterTri.addEventListener('change', renderMessages);
-
-  document.getElementById('btn-vider').addEventListener('click', async () => {
-    if (!confirm('Supprimer tous les messages ?')) return;
-    await remove(ref(db, `messages/${numeroId}`));
-    showToast('✅ Messages supprimés');
-  });
-
-  document.getElementById('btn-export').addEventListener('click', () => {
-    if (!allMessages.length) { showToast('Aucun message à exporter'); return; }
-    const txt = allMessages.map(m =>
-      `[${new Date(m.recu_at||Date.now()).toLocaleString('fr-FR')}] ${m.expediteur}\n${m.contenu}\n`
-    ).join('\n---\n\n');
-    const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `toby-sms-${numeroId}-${Date.now()}.txt`;
-    a.click();
-    showToast('📥 Export téléchargé');
   });
 }
+
+function timeAgo(ts) {
+  if (!ts) return '—';
+  const d = Math.floor((Date.now()-ts)/1000);
+  if (d < 60) return "à l'instant";
+  if (d < 3600) return Math.floor(d/60)+" min";
+  if (d < 86400) return Math.floor(d/3600)+" h";
+  return Math.floor(d/86400)+" j";
+}
+
+function notifyNewMessage() {
+  try {
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = 800;
+    gain.gain.setValueAtTime(0.1, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    osc.start(); osc.stop(ctx.currentTime + 0.3);
+  } catch(e) {}
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+document.getElementById('btn-vider').addEventListener('click', async () => {
+  if (!confirm('Supprimer tous les messages ?')) return;
+  await remove(ref(db, `messages/${numeroId}`));
+  showToast('✅ Messages supprimés');
+});
+
+document.getElementById('btn-export').addEventListener('click', () => {
+  if (!allMessages.length) { showToast('Aucun message'); return; }
+  const txt = allMessages.map(m =>
+    `[${new Date(m.recu_at||Date.now()).toLocaleString('fr-FR')}] ${m.expediteur}\n${m.contenu}\n`
+  ).join('\n---\n\n');
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `toby-sms-${numeroId}.txt`;
+  a.click();
+  showToast('📥 Export téléchargé');
+});
 
 const themeToggle = document.getElementById('theme-toggle');
 const savedTheme = localStorage.getItem('toby_theme') || 'light';
