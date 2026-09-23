@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin — iVASMS Clone</title>
+    <title>Admin — Toby SMS by Waze Studio</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, push, set, remove, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getDatabase, ref, push, set, remove, onValue, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
+        // ⚠️ MÊME config que index.html
         const firebaseConfig = {
             apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXX",
-            authDomain: "ivasms-clone.firebaseapp.com",
-            databaseURL: "https://ivasms-clone-default-rtdb.firebaseio.com",
-            projectId: "ivasms-clone",
-            storageBucket: "ivasms-clone.appspot.com",
+            authDomain: "toby-sms.firebaseapp.com",
+            databaseURL: "https://toby-sms-default-rtdb.firebaseio.com",
+            projectId: "toby-sms",
+            storageBucket: "toby-sms.appspot.com",
             messagingSenderId: "123456789",
             appId: "1:123456789:web:abcdef123456"
         };
@@ -21,21 +22,53 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        const PASSWORD = 'admin123'; // ⚠️ à changer
+        // ─── Double authentification ───
+        const ADMIN_PASSWORD = 's@liou11';
+        const ADMIN_CODE     = '2007';
+
         let authed = false;
 
-        // ─── Auth simple côté client (⚠️ pas sécurisé, démo seulement) ───
+        // Étape 1 : mot de passe
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const pwd = document.getElementById('pwd').value;
-            if (pwd === PASSWORD) {
+            const err = document.getElementById('login-error');
+
+            if (pwd === ADMIN_PASSWORD) {
+                // Passe à l'étape 2
+                document.getElementById('step-password').style.display = 'none';
+                document.getElementById('step-code').style.display = 'block';
+                err.textContent = '';
+                document.getElementById('code').focus();
+            } else {
+                err.textContent = '❌ Mot de passe incorrect';
+                document.getElementById('pwd').value = '';
+            }
+        });
+
+        // Étape 2 : code secret
+        document.getElementById('code-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const code = document.getElementById('code').value;
+            const err = document.getElementById('code-error');
+
+            if (code === ADMIN_CODE) {
                 authed = true;
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('admin-section').style.display = 'block';
                 initAdmin();
+                showToast('✅ Connecté en tant qu\'admin');
             } else {
-                document.getElementById('login-error').textContent = '❌ Mot de passe incorrect';
+                err.textContent = '❌ Code incorrect';
+                document.getElementById('code').value = '';
             }
+        });
+
+        // Bouton retour étape 1
+        document.getElementById('back-to-pwd').addEventListener('click', () => {
+            document.getElementById('step-code').style.display = 'none';
+            document.getElementById('step-password').style.display = 'block';
+            document.getElementById('pwd').focus();
         });
 
         // ─── Ajout d'un numéro ───
@@ -80,9 +113,10 @@
                         <div>
                             <strong>${escapeHtml(n.numero)}</strong>
                             <span class="pays"> — ${escapeHtml(n.pays)}</span>
+                            <span class="op"> · ${escapeHtml(n.operateur || 'Twilio')}</span>
                         </div>
                         <div class="admin-actions">
-                            <button class="btn btn-small btn-primary" data-simulate="${id}" data-numero="${escapeHtml(n.numero)}">
+                            <button class="btn btn-small btn-primary" data-simulate="${id}">
                                 📨 Simuler SMS
                             </button>
                             <button class="btn btn-small btn-danger" data-delete="${id}">🗑</button>
@@ -90,7 +124,6 @@
                     </div>
                 `).join('');
 
-                // Bind boutons
                 list.querySelectorAll('[data-delete]').forEach(b => {
                     b.addEventListener('click', async () => {
                         if (!confirm('Supprimer ce numéro et ses messages ?')) return;
@@ -101,13 +134,13 @@
                 });
 
                 list.querySelectorAll('[data-simulate]').forEach(b => {
-                    b.addEventListener('click', () => simulateSMS(b.dataset.simulate, b.dataset.numero));
+                    b.addEventListener('click', () => simulateSMS(b.dataset.simulate));
                 });
             });
         }
 
-        // ─── Simulation d'un SMS entrant ───
-        async function simulateSMS(numeroId, numero) {
+        // ─── Simulation SMS ───
+        async function simulateSMS(numeroId) {
             const expediteur = prompt('Expéditeur ?', 'Google');
             if (!expediteur) return;
             const contenu = prompt('Contenu du SMS ?', 'Votre code de vérification est : 123456');
@@ -122,7 +155,7 @@
 
             // Incrémente le compteur
             const countRef = ref(db, `numeros/${numeroId}/nb_sms`);
-            const snap = await new Promise(res => onValue(countRef, res, { onlyOnce: true }));
+            const snap = await get(countRef);
             await set(countRef, (snap.val() || 0) + 1);
 
             showToast('📨 SMS simulé envoyé !');
@@ -157,8 +190,16 @@
             display: flex; justify-content: space-between;
             align-items: center; height: 64px;
         }
-        .logo { font-size: 22px; font-weight: 700; color: #2c3e50; text-decoration: none; }
-        .logo span { color: #3498db; }
+        .logo {
+            font-size: 20px; font-weight: 700; color: #2c3e50;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .logo .brand { color: #3498db; }
+        .logo .studio {
+            font-size: 11px; color: #95a5a6;
+            font-weight: 500; letter-spacing: 0.5px;
+            display: block; margin-top: -4px;
+        }
         nav a { color: #555; text-decoration: none; margin-left: 24px; font-weight: 500; }
         nav a:hover, nav a.active { color: #3498db; }
 
@@ -189,8 +230,26 @@
         .btn-small.btn-primary { width: auto; }
         .btn-danger { background: #fee2e2; color: #b91c1c; }
         .btn-danger:hover { background: #fecaca; }
+        .btn-link {
+            background: none; border: none; color: #3498db;
+            cursor: pointer; font-size: 13px; margin-top: 8px;
+            text-decoration: underline;
+        }
 
         .error { color: #b91c1c; font-size: 14px; margin-top: 8px; }
+
+        .step-info {
+            font-size: 13px; color: #7f8c8d;
+            margin-bottom: 12px; padding-bottom: 12px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .step-badge {
+            display: inline-block; background: #eaf4fc;
+            color: #2980b9; font-weight: 700;
+            width: 22px; height: 22px; line-height: 22px;
+            text-align: center; border-radius: 50%;
+            margin-right: 6px; font-size: 12px;
+        }
 
         .admin-item {
             display: flex; justify-content: space-between;
@@ -201,6 +260,7 @@
         .admin-item:last-child { border-bottom: none; }
         .admin-item strong { font-family: 'Courier New', monospace; }
         .admin-item .pays { color: #7f8c8d; font-size: 14px; }
+        .admin-item .op { color: #b0b8bf; font-size: 13px; }
         .admin-actions { display: flex; gap: 6px; }
 
         .empty {
@@ -227,15 +287,26 @@
             font-size: 13px; color: #856404; margin-bottom: 20px;
         }
 
+        footer {
+            text-align: center; padding: 30px 0; color: #95a5a6;
+            font-size: 14px; border-top: 1px solid #e1e6eb;
+            background: #fff; margin-top: 50px;
+        }
+        footer strong { color: #3498db; }
+
         @media (max-width: 600px) {
             .admin-item { flex-direction: column; align-items: flex-start; }
+            .logo { font-size: 17px; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container header-inner">
-            <a href="index.html" class="logo">📱 iVASMS<span>Clone</span></a>
+            <a href="index.html" class="logo">
+                <span>📱 <span class="brand">Toby SMS</span>
+                <span class="studio">by Waze Studio</span></span>
+            </a>
             <nav>
                 <a href="index.html">Numéros</a>
                 <a href="admin.html" class="active">⚙️ Admin</a>
@@ -245,21 +316,44 @@
 
     <main class="container">
 
-        <!-- Login -->
+        <!-- Login double étape -->
         <section id="login-section">
             <h1>🔒 Administration</h1>
-            <div class="card" style="max-width:400px">
-                <form id="login-form">
-                    <input type="password" id="pwd" placeholder="Mot de passe admin" required>
-                    <button type="submit" class="btn btn-primary">Connexion</button>
-                    <div id="login-error" class="error"></div>
-                </form>
+
+            <div class="card" style="max-width:420px">
+
+                <!-- Étape 1 : mot de passe -->
+                <div id="step-password">
+                    <div class="step-info">
+                        <span class="step-badge">1</span> Étape 1 sur 2 — Mot de passe
+                    </div>
+                    <form id="login-form">
+                        <input type="password" id="pwd" placeholder="Mot de passe admin" required autofocus>
+                        <button type="submit" class="btn btn-primary">Continuer</button>
+                        <div id="login-error" class="error"></div>
+                    </form>
+                </div>
+
+                <!-- Étape 2 : code secret -->
+                <div id="step-code" style="display:none">
+                    <div class="step-info">
+                        <span class="step-badge">2</span> Étape 2 sur 2 — Code secret
+                    </div>
+                    <form id="code-form">
+                        <input type="password" id="code" placeholder="Code à 4 chiffres"
+                               maxlength="4" pattern="\d{4}" inputmode="numeric" required>
+                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                        <div id="code-error" class="error"></div>
+                        <button type="button" id="back-to-pwd" class="btn-link">← Retour</button>
+                    </form>
+                </div>
+
             </div>
         </section>
 
         <!-- Admin -->
         <section id="admin-section" style="display:none">
-            <h1>⚙️ Panneau Admin</h1>
+            <h1>⚙️ Panneau Admin — Toby SMS</h1>
 
             <div class="hint">
                 💡 Cet admin écrit directement dans Firebase. Pour de vrais SMS Twilio,
@@ -284,6 +378,13 @@
         </section>
 
     </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> <strong>Toby SMS</strong> by Waze Studio</p>
+        </div>
+    </footer>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 
     <div id="toast" class="toast"></div>
 </body>
