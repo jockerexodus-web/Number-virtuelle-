@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMS — iVASMS Clone</title>
+    <title>SMS — Toby SMS</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, onValue, query, orderByChild, limitToLast, remove, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getDatabase, ref, onValue, query, orderByChild, limitToLast, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
         // ⚠️ MÊME config que index.html
         const firebaseConfig = {
             apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXX",
-            authDomain: "ivasms-clone.firebaseapp.com",
-            databaseURL: "https://ivasms-clone-default-rtdb.firebaseio.com",
-            projectId: "ivasms-clone",
-            storageBucket: "ivasms-clone.appspot.com",
+            authDomain: "toby-sms.firebaseapp.com",
+            databaseURL: "https://toby-sms-default-rtdb.firebaseio.com",
+            projectId: "toby-sms",
+            storageBucket: "toby-sms.appspot.com",
             messagingSenderId: "123456789",
             appId: "1:123456789:web:abcdef123456"
         };
@@ -22,36 +22,27 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // ─── Récupère l'ID dans l'URL ───
         const params = new URLSearchParams(location.search);
         const numeroId = params.get('id');
 
-        if (!numeroId) {
-            location.href = 'index.html';
-        }
+        if (!numeroId) location.href = 'index.html';
 
         const titleEl = document.getElementById('numero-titre');
         const subEl = document.getElementById('numero-sub');
         const container = document.getElementById('messages-container');
-        const headerEl = document.getElementById('sms-header');
-        const dotEl = document.getElementById('live-dot');
 
         let lastCount = 0;
         let firstLoad = true;
 
-        // ─── Infos du numéro ───
-        const numeroRef = ref(db, `numeros/${numeroId}`);
-        onValue(numeroRef, (snap) => {
+        // Infos du numéro
+        onValue(ref(db, `numeros/${numeroId}`), (snap) => {
             const n = snap.val();
-            if (!n) {
-                location.href = 'index.html';
-                return;
-            }
+            if (!n) { location.href = 'index.html'; return; }
             titleEl.textContent = n.numero;
             subEl.innerHTML = `${escapeHtml(n.pays)} · ${escapeHtml(n.operateur || 'Twilio')} <span class="live-dot"></span><span class="live-text">En direct</span>`;
         });
 
-        // ─── Messages en temps réel ───
+        // Messages temps réel
         const messagesRef = query(
             ref(db, `messages/${numeroId}`),
             orderByChild('recu_at'),
@@ -94,15 +85,11 @@
                 attachCopyHandlers();
             }
 
-            // Notification si nouveau message
-            if (!firstLoad && messages.length > lastCount) {
-                notifyNewMessage();
-            }
+            if (!firstLoad && messages.length > lastCount) notifyNewMessage();
             lastCount = messages.length;
             firstLoad = false;
         });
 
-        // ─── Helpers ───
         function escapeHtml(str) {
             return String(str).replace(/[&<>"']/g, c => ({
                 '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
@@ -148,7 +135,6 @@
             } catch (e) {}
         }
 
-        // ─── Bouton vider ───
         document.getElementById('btn-vider').addEventListener('click', async () => {
             if (!confirm('Supprimer tous les messages de ce numéro ?')) return;
             await remove(ref(db, `messages/${numeroId}`));
@@ -170,8 +156,16 @@
             display: flex; justify-content: space-between;
             align-items: center; height: 64px;
         }
-        .logo { font-size: 22px; font-weight: 700; color: #2c3e50; text-decoration: none; }
-        .logo span { color: #3498db; }
+        .logo {
+            font-size: 20px; font-weight: 700; color: #2c3e50;
+            text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+        .logo .brand { color: #3498db; }
+        .logo .studio {
+            font-size: 11px; color: #95a5a6;
+            font-weight: 500; letter-spacing: 0.5px;
+            display: block; margin-top: -4px;
+        }
         nav a { color: #555; text-decoration: none; margin-left: 24px; font-weight: 500; }
         nav a:hover, nav a.active { color: #3498db; }
 
@@ -279,18 +273,23 @@
             text-align: center; padding: 30px 0; color: #95a5a6;
             font-size: 14px; border-top: 1px solid #e1e6eb; background: #fff;
         }
+        footer strong { color: #3498db; }
 
         @media (max-width: 600px) {
             .sms-header { flex-direction: column; align-items: flex-start; }
             .actions { width: 100%; }
             .actions .btn { flex: 1; }
+            .logo { font-size: 17px; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container header-inner">
-            <a href="index.html" class="logo">📱 iVASMS<span>Clone</span></a>
+            <a href="index.html" class="logo">
+                <span>📱 <span class="brand">Toby SMS</span>
+                <span class="studio">by Waze Studio</span></span>
+            </a>
             <nav>
                 <a href="index.html">Numéros</a>
                 <a href="admin.html">⚙️ Admin</a>
@@ -316,6 +315,11 @@
         </div>
     </main>
 
-    <footer><div class="container"><p>&copy; iVASMS Clone</p></div></footer>
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> <strong>Toby SMS</strong> by Waze Studio</p>
+        </div>
+    </footer>
+    <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
