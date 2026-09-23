@@ -16,7 +16,6 @@ header{background:var(--card);border-bottom:1px solid var(--border);position:sti
 .logo{font-size:20px;font-weight:700;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:8px;white-space:nowrap}
 .logo .brand{color:var(--primary)}
 .logo .studio{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.5px;display:block;margin-top:-4px}
-.header-right{display:flex;align-items:center;gap:8px}
 nav{display:flex;gap:4px}
 nav a{color:var(--muted);text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:500;font-size:14px;transition:all .2s}
 nav a:hover{background:var(--bg);color:var(--text)}
@@ -59,20 +58,11 @@ nav a.active{background:rgba(52,152,219,.12);color:var(--primary)}
 .empty-icon{font-size:48px;margin-bottom:14px;opacity:.7}
 .empty p{font-size:16px;margin-bottom:6px;color:var(--text)}
 .empty small{font-size:13px}
-.empty button{margin-top:16px;padding:10px 20px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px}
-.empty button:hover{background:var(--primary-dark)}
-.error-box{background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.3);color:var(--danger);padding:20px;border-radius:12px;margin:20px 0;font-size:14px;grid-column:1/-1;line-height:1.7}
-.error-box strong{display:block;margin-bottom:10px;font-size:16px}
-.error-box code{background:rgba(0,0,0,.08);padding:2px 6px;border-radius:4px;font-size:12px;font-family:'Courier New',monospace}
-.error-box ol{margin:10px 0 0 20px}
-.error-box li{margin:6px 0}
-.big-btn{display:inline-block;margin-top:14px;padding:12px 24px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none}
-.big-btn:hover{background:var(--primary-dark)}
-footer{text-align:center;padding:30px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--border);background:var(--card);margin-top:auto}
+.loader{text-align:center;padding:60px 40px;grid-column:1/-1}
+.loader-spin{width:44px;height:44px;border:4px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+footer{text-align:center;padding:30px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--border);background:var(--card);margin-top:50px}
 footer strong{color:var(--primary)}
-.footer-links{display:flex;justify-content:center;gap:20px;margin-bottom:10px;flex-wrap:wrap}
-.footer-links a{color:var(--muted);text-decoration:none;font-size:13px}
-.footer-links a:hover{color:var(--primary)}
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:#1a252f;color:#fff;padding:12px 22px;border-radius:10px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;z-index:999;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.3)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:640px){
@@ -80,7 +70,6 @@ footer strong{color:var(--primary)}
 .header-inner{height:auto;padding:12px 0;flex-direction:column;align-items:stretch}
 nav{justify-content:center}
 .logo{justify-content:center;text-align:center}
-.header-right{justify-content:center}
 .toolbar{padding:12px}
 .filter-select{min-width:0;flex:1}
 }
@@ -94,9 +83,7 @@ nav{justify-content:center}
 <a href="index.html" class="active">Numéros</a>
 <a href="admin.html">⚙️ Admin</a>
 </nav>
-<div class="header-right">
-<button class="icon-btn" id="theme-toggle" title="Thème">🌙</button>
-</div>
+<button class="icon-btn" id="theme-toggle">🌙</button>
 </div>
 </header>
 
@@ -130,20 +117,12 @@ nav{justify-content:center}
 </div>
 
 <div id="numeros-grid" class="numeros-grid">
-<div class="empty">
-<div class="empty-icon">⏳</div>
-<p>Connexion à la base de données...</p>
-<small>Chargement en cours</small>
-</div>
+<div class="loader"><div class="loader-spin"></div><p>Connexion à la base de données...</p></div>
 </div>
 </main>
 
 <footer>
 <div class="container">
-<div class="footer-links">
-<a href="index.html">Accueil</a>
-<a href="admin.html">Admin</a>
-</div>
 <p>&copy; <span id="year"></span> <strong>Toby SMS</strong> by Waze Studio</p>
 </div>
 </footer>
@@ -152,194 +131,154 @@ nav{justify-content:center}
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-/* ╔══════════════════════════════════════════════════════╗
-   ║  ⚠️ COLLE TA CONFIG FIREBASE ICI (les 7 lignes)     ║
-   ╚══════════════════════════════════════════════════════╝ */
 const firebaseConfig = {
-  apiKey: "REMPLACE_MOI",
-  authDomain: "REMPLACE_MOI",
-  databaseURL: "REMPLACE_MOI",
-  projectId: "REMPLACE_MOI",
-  storageBucket: "REMPLACE_MOI",
-  messagingSenderId: "REMPLACE_MOI",
-  appId: "REMPLACE_MOI"
+  apiKey: "AIzaSyC7DyasG34K8ylgxbHVzxgAxIGACUFVbLA",
+  authDomain: "toby-9065b.firebaseapp.com",
+  databaseURL: "https://toby-9065b-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "toby-9065b",
+  storageBucket: "toby-9065b.firebasestorage.app",
+  messagingSenderId: "163849144101",
+  appId: "1:163849144101:web:3db472e7f6f237afafbccc"
 };
 
-const configOk = !firebaseConfig.apiKey.includes('REMPLACE');
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-if (!configOk) {
-  document.getElementById('numeros-grid').innerHTML = `
-    <div class="error-box">
-      <strong>⚠️ Configuration Firebase manquante</strong>
-      <p>Pour voir les numéros, tu dois connecter le site à une base de données gratuite Firebase. C'est obligatoire et ça prend 5 minutes.</p>
-      <ol>
-        <li>Va sur <a href="https://console.firebase.google.com" target="_blank" style="color:inherit;text-decoration:underline;font-weight:600">console.firebase.google.com</a></li>
-        <li>Crée un projet <code>toby-sms</code></li>
-        <li>Menu de gauche → <strong>Build → Realtime Database</strong> → <strong>Créer une base</strong> (mode test)</li>
-        <li>Onglet <strong>Règles</strong> → mets <code>".read": true, ".write": true</code> → Publier</li>
-        <li>⚙️ <strong>Paramètres du projet</strong> → onglet Général → descends → icône <code>&lt;/&gt;</code> (Web)</li>
-        <li>Copie le bloc <code>firebaseConfig</code> et colle-le dans ce fichier HTML (ligne ~298)</li>
-      </ol>
-      <a href="https://console.firebase.google.com" target="_blank" class="big-btn">🚀 Ouvrir Firebase</a>
-    </div>`;
-} else {
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  initApp(db);
-}
+const FLAGS = {'france':'🇫🇷','usa':'🇺🇸','états-unis':'🇺🇸','united states':'🇺🇸','royaume-uni':'🇬🇧','uk':'🇬🇧','angleterre':'🇬🇧','allemagne':'🇩🇪','germany':'🇩🇪','espagne':'🇪🇸','italie':'🇮🇹','belgique':'🇧🇪','canada':'🇨🇦','suisse':'🇨🇭','portugal':'🇵🇹','pays-bas':'🇳🇱','suède':'🇸🇪','norvège':'🇳🇴','danemark':'🇩🇰','finlande':'🇫🇮','irlande':'🇮🇪','autriche':'🇦🇹','pologne':'🇵🇱','inde':'🇮🇳','chine':'🇨🇳','japon':'🇯🇵','brésil':'🇧🇷','mexique':'🇲🇽','australie':'🇦🇺','maroc':'🇲🇦','algérie':'🇩🇿','tunisie':'🇹🇳','égypte':'🇪🇬','sénégal':'🇸🇳','cameroun':'🇨🇲'};
+const getFlag = p => FLAGS[(p||'').toLowerCase().trim()] || '🌐';
+const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-function initApp(db) {
-  const FLAGS = {
-    'france':'🇫🇷','usa':'🇺🇸','états-unis':'🇺🇸','united states':'🇺🇸',
-    'royaume-uni':'🇬🇧','uk':'🇬🇧','angleterre':'🇬🇧','allemagne':'🇩🇪','germany':'🇩🇪',
-    'espagne':'🇪🇸','italie':'🇮🇹','belgique':'🇧🇪','canada':'🇨🇦','suisse':'🇨🇭',
-    'portugal':'🇵🇹','pays-bas':'🇳🇱','suède':'🇸🇪','norvège':'🇳🇴','danemark':'🇩🇰',
-    'finlande':'🇫🇮','irlande':'🇮🇪','autriche':'🇦🇹','pologne':'🇵🇱','russie':'🇷🇺',
-    'inde':'🇮🇳','chine':'🇨🇳','japon':'🇯🇵','brésil':'🇧🇷','mexique':'🇲🇽',
-    'australie':'🇦🇺','maroc':'🇲🇦','algérie':'🇩🇿','tunisie':'🇹🇳','égypte':'🇪🇬',
-    'sénégal':'🇸🇳','cameroun':'🇨🇲'
-  };
-  const getFlag = p => FLAGS[(p||'').toLowerCase().trim()] || '🌐';
-  const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const grid = document.getElementById('numeros-grid');
+const searchInput = document.getElementById('search');
+const filterPays = document.getElementById('filter-pays');
+const filterTri = document.getElementById('filter-tri');
+const resultCount = document.getElementById('result-count');
 
-  const grid = document.getElementById('numeros-grid');
-  const searchInput = document.getElementById('search');
-  const filterPays = document.getElementById('filter-pays');
-  const filterTri = document.getElementById('filter-tri');
-  const resultCount = document.getElementById('result-count');
+let allNumeros = [];
+let favorites = JSON.parse(localStorage.getItem('toby_favs') || '[]');
+let demoInjected = false;
 
-  let allNumeros = [];
-  let favorites = JSON.parse(localStorage.getItem('toby_favs') || '[]');
+onValue(ref(db, 'numeros'), async (snapshot) => {
+  const data = snapshot.val() || {};
+  allNumeros = Object.entries(data).map(([id, n]) => ({ id, ...n }));
 
-  onValue(ref(db, 'numeros'), async (snapshot) => {
-    const data = snapshot.val() || {};
-    allNumeros = Object.entries(data).map(([id, n]) => ({ id, ...n }));
+  if (allNumeros.length === 0 && !demoInjected) {
+    demoInjected = true;
+    await injectDemo();
+    return;
+  }
 
-    // 👉 Si base vide : injecter les démos automatiquement
-    if (allNumeros.length === 0) {
-      await injectDemo(db);
-      return;
-    }
+  const paysUniques = [...new Set(allNumeros.map(n => n.pays).filter(Boolean))].sort();
+  filterPays.innerHTML = '<option value="">🌍 Tous les pays</option>' + paysUniques.map(p => `<option value="${esc(p)}">${getFlag(p)} ${esc(p)}</option>`).join('');
 
-    const paysUniques = [...new Set(allNumeros.map(n => n.pays).filter(Boolean))].sort();
-    filterPays.innerHTML = '<option value="">🌍 Tous les pays</option>' +
-      paysUniques.map(p => `<option value="${esc(p)}">${getFlag(p)} ${esc(p)}</option>`).join('');
+  const totalSms = allNumeros.reduce((s, n) => s + (n.nb_sms || 0), 0);
+  document.getElementById('stat-numeros').textContent = allNumeros.length;
+  document.getElementById('stat-sms').textContent = totalSms;
+  document.getElementById('stat-pays').textContent = paysUniques.length;
 
-    const totalSms = allNumeros.reduce((s, n) => s + (n.nb_sms || 0), 0);
-    document.getElementById('stat-numeros').textContent = allNumeros.length;
-    document.getElementById('stat-sms').textContent = totalSms;
-    document.getElementById('stat-pays').textContent = paysUniques.length;
+  renderNumeros();
+}, (error) => {
+  grid.innerHTML = `<div class="empty"><div class="empty-icon">❌</div><p>Erreur de connexion</p><small>${esc(error.message)}</small></div>`;
+});
 
-    renderNumeros();
-  }, (error) => {
-    grid.innerHTML = `
-      <div class="error-box">
-        <strong>❌ Erreur de connexion Firebase</strong>
-        <p><code>${esc(error.message)}</code></p>
-        <p style="margin-top:10px">Vérifie que :</p>
-        <ol>
-          <li>La <strong>Realtime Database</strong> est créée</li>
-          <li>Les règles autorisent la lecture</li>
-          <li>La <code>databaseURL</code> est correcte (elle doit ressembler à <code>https://xxx-default-rtdb.firebaseio.com</code>)</li>
-        </ol>
-      </div>`;
+function renderNumeros() {
+  let result = [...allNumeros];
+  const q = searchInput.value.toLowerCase().trim();
+  if (q) result = result.filter(n => (n.numero||'').toLowerCase().includes(q) || (n.pays||'').toLowerCase().includes(q) || (n.operateur||'').toLowerCase().includes(q));
+  if (filterPays.value) result = result.filter(n => n.pays === filterPays.value);
+  const tri = filterTri.value;
+  if (tri === 'recent') result.sort((a,b)=>(b.created_at||0)-(a.created_at||0));
+  else if (tri === 'sms') result.sort((a,b)=>(b.nb_sms||0)-(a.nb_sms||0));
+  else if (tri === 'numero') result.sort((a,b)=>(a.numero||'').localeCompare(b.numero||''));
+  else if (tri === 'pays') result.sort((a,b)=>(a.pays||'').localeCompare(b.pays||''));
+  result.sort((a,b)=>((favorites.includes(b.id)?1:0)-(favorites.includes(a.id)?1:0)));
+
+  resultCount.textContent = `${result.length} numéro${result.length>1?'s':''}`;
+
+  if (!result.length) {
+    grid.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><p>Aucun résultat</p><small>Essaie d'autres mots-clés</small></div>`;
+    return;
+  }
+
+  grid.innerHTML = result.map(n => {
+    const fav = favorites.includes(n.id);
+    return `<a href="sms.html?id=${n.id}" class="numero-card">
+      <div class="card-top"><span class="flag">${getFlag(n.pays)}</span>
+      <button class="favorite ${fav?'active':''}" data-fav="${n.id}" title="Favori">${fav?'⭐':'☆'}</button></div>
+      <div class="numero">${esc(n.numero||'')}</div>
+      <div class="meta">
+        <span class="badge">${esc(n.pays||'—')}</span>
+        <span class="sms-count">💬 ${n.nb_sms||0} SMS</span>
+      </div>
+    </a>`;
+  }).join('');
+
+  document.querySelectorAll('[data-fav]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault(); e.stopPropagation();
+      const id = btn.dataset.fav;
+      if (favorites.includes(id)) favorites = favorites.filter(f=>f!==id);
+      else favorites.push(id);
+      localStorage.setItem('toby_favs', JSON.stringify(favorites));
+      renderNumeros();
+    });
   });
-
-  function renderNumeros() {
-    let result = [...allNumeros];
-    const q = searchInput.value.toLowerCase().trim();
-    if (q) result = result.filter(n =>
-      (n.numero||'').toLowerCase().includes(q) ||
-      (n.pays||'').toLowerCase().includes(q) ||
-      (n.operateur||'').toLowerCase().includes(q));
-    if (filterPays.value) result = result.filter(n => n.pays === filterPays.value);
-
-    const tri = filterTri.value;
-    if (tri === 'recent') result.sort((a,b)=>(b.created_at||0)-(a.created_at||0));
-    else if (tri === 'sms') result.sort((a,b)=>(b.nb_sms||0)-(a.nb_sms||0));
-    else if (tri === 'numero') result.sort((a,b)=>(a.numero||'').localeCompare(b.numero||''));
-    else if (tri === 'pays') result.sort((a,b)=>(a.pays||'').localeCompare(b.pays||''));
-
-    result.sort((a,b)=>{
-      const fa = favorites.includes(a.id)?1:0, fb = favorites.includes(b.id)?1:0;
-      return fb-fa;
-    });
-
-    resultCount.textContent = `${result.length} numéro${result.length>1?'s':''}`;
-
-    if (!result.length) {
-      grid.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><p>Aucun résultat</p><small>Essaie d'autres mots-clés</small></div>`;
-      return;
-    }
-
-    grid.innerHTML = result.map(n => {
-      const fav = favorites.includes(n.id);
-      return `<a href="sms.html?id=${n.id}" class="numero-card">
-        <div class="card-top"><span class="flag">${getFlag(n.pays)}</span>
-        <button class="favorite ${fav?'active':''}" data-fav="${n.id}" title="Favori">${fav?'⭐':'☆'}</button></div>
-        <div class="numero">${esc(n.numero||'')}</div>
-        <div class="meta">
-          <span class="badge">${esc(n.pays||'—')}</span>
-          <span class="sms-count">💬 ${n.nb_sms||0} SMS</span>
-        </div>
-      </a>`;
-    }).join('');
-
-    document.querySelectorAll('[data-fav]').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault(); e.stopPropagation();
-        const id = btn.dataset.fav;
-        if (favorites.includes(id)) favorites = favorites.filter(f=>f!==id);
-        else favorites.push(id);
-        localStorage.setItem('toby_favs', JSON.stringify(favorites));
-        renderNumeros();
-      });
-    });
-  }
-
-  // Injecter les numéros de démo
-  async function injectDemo(db) {
-    grid.innerHTML = `<div class="empty"><div class="empty-icon">📥</div><p>Initialisation...</p><small>Création des numéros de démo</small></div>`;
-    const demo = [
-      { numero:'+33 6 12 34 56 78', pays:'France', operateur:'Orange', nb_sms:0 },
-      { numero:'+33 6 98 76 54 32', pays:'France', operateur:'SFR', nb_sms:0 },
-      { numero:'+1 415 555 2671', pays:'USA', operateur:'T-Mobile', nb_sms:0 },
-      { numero:'+1 212 555 0147', pays:'USA', operateur:'AT&T', nb_sms:0 },
-      { numero:'+44 7700 900 123', pays:'Royaume-Uni', operateur:'Vodafone', nb_sms:0 },
-      { numero:'+49 151 2345 6789', pays:'Allemagne', operateur:'Telekom', nb_sms:0 },
-      { numero:'+34 612 345 678', pays:'Espagne', operateur:'Movistar', nb_sms:0 },
-      { numero:'+32 470 12 34 56', pays:'Belgique', operateur:'Proximus', nb_sms:0 },
-      { numero:'+41 76 123 45 67', pays:'Suisse', operateur:'Swisscom', nb_sms:0 },
-      { numero:'+1 604 555 0199', pays:'Canada', operateur:'Rogers', nb_sms:0 },
-      { numero:'+39 333 123 4567', pays:'Italie', operateur:'TIM', nb_sms:0 },
-      { numero:'+351 912 345 678', pays:'Portugal', operateur:'MEO', nb_sms:0 },
-      { numero:'+212 6 12 34 56 78', pays:'Maroc', operateur:'Maroc Telecom', nb_sms:0 },
-      { numero:'+213 5 12 34 56 78', pays:'Algérie', operateur:'Djezzy', nb_sms:0 },
-      { numero:'+216 20 123 456', pays:'Tunisie', operateur:'Ooredoo', nb_sms:0 },
-      { numero:'+91 98765 43210', pays:'Inde', operateur:'Airtel', nb_sms:0 }
-    ];
-    const now = Date.now();
-    for (let i = 0; i < demo.length; i++) {
-      const id = 'demo_' + i;
-      await set(ref(db, 'numeros/' + id), { ...demo[i], created_at: now - i * 1000 });
-    }
-    showToast('✅ 16 numéros de démo chargés !');
-  }
-
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2500);
-  }
-
-  searchInput.addEventListener('input', renderNumeros);
-  filterPays.addEventListener('change', renderNumeros);
-  filterTri.addEventListener('change', renderNumeros);
 }
 
-// Thème
+async function injectDemo() {
+  grid.innerHTML = `<div class="loader"><div class="loader-spin"></div><p>Création des numéros de démo...</p></div>`;
+  const demo = [
+    { numero:'+33 6 12 34 56 78', pays:'France', operateur:'Orange', nb_sms:2 },
+    { numero:'+33 6 98 76 54 32', pays:'France', operateur:'SFR', nb_sms:0 },
+    { numero:'+33 7 45 67 89 01', pays:'France', operateur:'Bouygues', nb_sms:1 },
+    { numero:'+1 415 555 2671', pays:'USA', operateur:'T-Mobile', nb_sms:0 },
+    { numero:'+1 212 555 0147', pays:'USA', operateur:'AT&T', nb_sms:0 },
+    { numero:'+44 7700 900 123', pays:'Royaume-Uni', operateur:'Vodafone', nb_sms:1 },
+    { numero:'+49 151 2345 6789', pays:'Allemagne', operateur:'Telekom', nb_sms:0 },
+    { numero:'+34 612 345 678', pays:'Espagne', operateur:'Movistar', nb_sms:0 },
+    { numero:'+32 470 12 34 56', pays:'Belgique', operateur:'Proximus', nb_sms:0 },
+    { numero:'+41 76 123 45 67', pays:'Suisse', operateur:'Swisscom', nb_sms:0 },
+    { numero:'+1 604 555 0199', pays:'Canada', operateur:'Rogers', nb_sms:0 },
+    { numero:'+39 333 123 4567', pays:'Italie', operateur:'TIM', nb_sms:0 },
+    { numero:'+351 912 345 678', pays:'Portugal', operateur:'MEO', nb_sms:0 },
+    { numero:'+212 6 12 34 56 78', pays:'Maroc', operateur:'Maroc Telecom', nb_sms:0 },
+    { numero:'+213 5 12 34 56 78', pays:'Algérie', operateur:'Djezzy', nb_sms:0 },
+    { numero:'+216 20 123 456', pays:'Tunisie', operateur:'Ooredoo', nb_sms:0 }
+  ];
+  const now = Date.now();
+  for (let i = 0; i < demo.length; i++) {
+    await set(ref(db, 'numeros/demo_' + i), { ...demo[i], created_at: now - i * 1000 });
+  }
+
+  const demoMsgs = [
+    { numero:'demo_0', expediteur:'Google', contenu:'Votre code de vérification est : 482910' },
+    { numero:'demo_0', expediteur:'Facebook', contenu:'Code de connexion : 774512. Ne le partagez pas.' },
+    { numero:'demo_2', expediteur:'WhatsApp', contenu:'Votre code WhatsApp est 123-456' },
+    { numero:'demo_5', expediteur:'Amazon', contenu:'Votre OTP est 928471. Valide 10 minutes.' }
+  ];
+  for (let i = 0; i < demoMsgs.length; i++) {
+    await set(ref(db, `messages/${demoMsgs[i].numero}/demo_msg_${i}`), {
+      expediteur: demoMsgs[i].expediteur,
+      contenu: demoMsgs[i].contenu,
+      recu_at: now - i * 60000
+    });
+  }
+
+  showToast('✅ 16 numéros et 4 SMS de démo créés !');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+searchInput.addEventListener('input', renderNumeros);
+filterPays.addEventListener('change', renderNumeros);
+filterTri.addEventListener('change', renderNumeros);
+
 const themeToggle = document.getElementById('theme-toggle');
 const savedTheme = localStorage.getItem('toby_theme') || 'light';
 document.body.classList.toggle('dark', savedTheme === 'dark');
